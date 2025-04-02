@@ -19306,3 +19306,74 @@ th {
   margin-top: 20px;
   text-align: right;
 }
+
+
+.image-container {
+  position: relative;
+  // display: flex;
+  display: inline-block;
+}
+
+// .single-image {
+//   position: relative;
+//   cursor: crosshair;
+//   overflow: hidden;
+// }
+
+// .magnifying-lens {
+//   position: absolute;
+//   width: 150px;
+//   height: 150px;
+//   border: 2px solid #fff;
+//   border-radius: 50%;
+//   pointer-events: none;
+//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+//   z-index: 10;
+//   transform: translate(-50%, -50%);
+// }
+.magnifying-lens {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 2px solid #ddd;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+
+// .zoomed-preview {
+//   width: 400px;
+//   height: 400px;
+//   margin-left: 20px;
+//   border: 1px solid #ddd;
+//   overflow: hidden;
+//   position: relative;
+// }
+.zoomed-preview {
+  position: absolute;
+  top: 0;
+  left: 100%; /* Moves it to the right of the image */
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  z-index: 999; /* Ensures it overlaps the text */
+  background: white;
+  border: 1px solid #ddd;
+}
+
+// .zoomed-image {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   background-repeat: no-repeat;
+// }
+
+.zoomed-image {
+  width: 800px; /* Increases the zoom effect */
+  height: 800px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(2); /* Zoom effect */
+}

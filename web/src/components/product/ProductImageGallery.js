@@ -37,17 +37,49 @@ const ProductImageGallery = ({ product }) => {
     slideToClickedSlide: true,
     navigation: true
   };
+  const [isHovering, setIsHovering] = useState(false);
   const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
   const imgRef = useRef(null);
-  const handleMouseMove = (e) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - left) / width) * 100;
-    const y = ((e.clientY - top) / height) * 100;
-    setBackgroundPosition(`${x}% ${y}%`);
-    setLensPosition({ x: e.clientX - 75, y: e.clientY - 75 });
-  };
+  // const handleMouseMove = (e) => {
+  //   const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+  //   const x = ((e.clientX - left) / width) * 100;
+  //   const y = ((e.clientY - top) / height) * 100;
+  //   setBackgroundPosition(`${x}% ${y}%`);
+  //   setLensPosition({ x: e.clientX - 75, y: e.clientY - 75 });
+  // };
 
+  
+
+
+
+  const handleMouseMove = (e) => {
+    if (!imgRef.current) return;
+  
+    const { left, top, width, height } = imgRef.current.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    
+    // Ensure lens stays within image bounds
+    const lensWidth = 150;
+    const lensHeight = 150;
+    
+    let lensX = x;
+    let lensY = y;
+    
+    if (x < lensWidth / 2) lensX = lensWidth / 2;
+    if (x > width - lensWidth / 2) lensX = width - lensWidth / 2;
+    if (y < lensHeight / 2) lensY = lensHeight / 2;
+    if (y > height - lensHeight / 2) lensY = height - height / 2;
+    
+    setLensPosition({ x: lensX, y: lensY });
+    
+    // Calculate background position for zoom effect
+    const bgX = (x / width) * 100;
+    const bgY = (y / height) * 100;
+    setBackgroundPosition(`${bgX}% ${bgY}%`);
+  };
   
 
   return (
@@ -93,6 +125,9 @@ const ProductImageGallery = ({ product }) => {
 
 
 
+
+
+
 {product?.image?.length ? (
   <Swiper options={gallerySwiperParams}>
     {product.image.map((single, key) => (
@@ -100,25 +135,55 @@ const ProductImageGallery = ({ product }) => {
         <button className="lightgallery-button" onClick={() => setIndex(key)}>
           <i className="pe-7s-expand1"></i>
         </button>
-        <div 
-          className="single-image"
-          onMouseMove={handleMouseMove}
-        >
-          <img
-            ref={imgRef}
-            src={process.env.PUBLIC_URL + single}
-            className="img-fluid"
-            alt=""
-          />
-          <div
-            className="magnifying-lens"
-            style={{
-              left: `${lensPosition.x}px`,
-              top: `${lensPosition.y}px`,
-              backgroundImage: `url(${process.env.PUBLIC_URL + single})`,
-              backgroundPosition: backgroundPosition,
-            }}
-          />
+        <div className="image-container">
+          <div 
+            className="single-image"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <img
+              ref={imgRef}
+              src={process.env.PUBLIC_URL + single}
+              className="img-fluid"
+              alt=""
+            />
+            {isHovering && (
+              <div
+                className="magnifying-lens"
+                style={{
+                  left: `${lensPosition.x}px`,
+                  top: `${lensPosition.y}px`,
+                  backgroundImage: `url(${process.env.PUBLIC_URL + single})`,
+                  backgroundPosition: backgroundPosition,
+                  backgroundSize: `${imgRef.current?.width * 2}px ${imgRef.current?.height * 2}px`
+                }}
+              />
+            )}
+          </div>
+          {/* {isHovering && (
+            <div className="zoomed-preview">
+              <div 
+                className="zoomed-image"
+                style={{
+                  backgroundImage: `url(${process.env.PUBLIC_URL + single})`,
+                  backgroundPosition: backgroundPosition,
+                  backgroundSize: `${imgRef.current?.width * 2}px ${imgRef.current?.height * 2}px`
+                }}
+              />
+            </div> */}
+            {isHovering && (
+  <div className="zoomed-preview">
+    <div 
+      className="zoomed-image"
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL + single})`,
+        backgroundPosition: backgroundPosition,
+        backgroundSize: `${imgRef.current?.width * 2}px ${imgRef.current?.height * 2}px`
+      }}
+    />
+  </div>
+          )}
         </div>
       </SwiperSlide>
     ))}
