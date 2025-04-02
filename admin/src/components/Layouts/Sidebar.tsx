@@ -1817,7 +1817,7 @@ const Sidebar = () => {
                                 <NavLink to="/Components/image-update" className="group">
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
-                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Image_Update')}</span>
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('pdate')}</span>
                                     </div>
                                 </NavLink>
                             </li>

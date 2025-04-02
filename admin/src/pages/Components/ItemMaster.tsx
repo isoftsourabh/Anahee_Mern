@@ -554,6 +554,7 @@ const ItemMaster: React.FC = () => {
     // };
     const fetchImagesFromAPI = async () => {
         const formData = new FormData();
+        formData.append('ItemId', item.ItemId);
         images.forEach((image) => {
             formData.append("photo", image.file);
         });

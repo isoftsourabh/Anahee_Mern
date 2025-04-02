@@ -41,18 +41,27 @@ const RemoteFromMaster = () => {
     // const [dataLoaded, setDataLoaded] = useState(false); // New state
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/getCodetype`);
-                const data = await response.json();
-                setOptions(data)
+                const response = await fetch(`${BASE_URL}/getrfmaster`);
+                console.log("response",response); 
+
+                if (response.ok) {
+                    const data = await response.json(); 
+                    console.log("data",data); 
+                    // setRecordsData();
+                    // setInitialRecords();
+                } else {
+                    console.error('Failed to fetch data, status:', response.status);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
+    
         fetchData();
-    }, [])
+    }, []);
+    
 
     useEffect(() => {
         setPage(1);
