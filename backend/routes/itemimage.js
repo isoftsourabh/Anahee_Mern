@@ -3,25 +3,10 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
+const con = require('../config')
 const BASE_URL = "http://localhost:3000"; // Change if needed
 
 const router = express.Router();
-
-// 🛠️ Create MySQL Connection
-const db = mysql.createConnection({
-  host: "4.213.43.18",
-  user: "isrbs",
-  password: "isoft@1209ISZ",
-  database: "madhuban",
-  port: 3306,
-});
-
-// 🛠️ Connect to MySQL Database
-db.connect((err) => {
-  if (err) console.error("DB Connection Failed:", err);
-  else console.log("Connected to MySQL Database");
-});
 
 // Multer Setup for Image Uploads
 const storage = multer.diskStorage({
@@ -34,20 +19,58 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-router.post("/photoupload", upload.array("photo", 5), (req, res) => {
-  // Ensure files are uploaded correctly
-  if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ error: "No image file uploaded" });
+// router.post("/photoupload", upload.array("photo", 5), (req, res) => {
+//   // Ensure files are uploaded correctly
+//   const itemId = req.body.ItemId;
+
+//   if (!req.files || req.files.length === 0) {
+//       return res.status(400).json({ error: "No image file uploaded" });
+//   }
+//   if (!itemId) {
+//     return res.status(400).json({ error: 'ItemId is required' });
+//   }
+//   const photoUrls = req.files.map(file => `/images/banner/${file.filename}`);
+
+//   db.query("INSERT INTO itemimage (PHOTO) VALUES (?)", [JSON.stringify(photoUrls)], (err, result) => {
+//       if (err) return res.status(500).json({ error: "Database error", detail: err });
+
+//       res.json({ success: true, images: photoUrls });
+//   });
+// });
+
+router.post("/photoupload", upload.array("photo", 5), async (req, res) => {
+  try {
+    const itemId = req.body.ItemId;
+    
+    // Ensure files are uploaded correctly
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: "No image file uploaded" });
+    }
+
+    if (!itemId) {
+      return res.status(400).json({ error: 'ItemId is required' });
+    }
+
+    const photoUrls = req.files.map(file => `/images/banner/${file.filename}`);
+ 
+    for (const url of photoUrls) {
+      await new Promise((resolve, reject) => {
+        con.query("INSERT INTO itemimage (PHOTO,ITEMID) VALUES (?, ?)", [url,itemId], (err, result) => {
+          if (err) {
+            reject(err); 
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    }
+    res.json({ success: true, images: photoUrls });
+    
+  } catch (err) {
+    res.status(500).json({ error: "Database error", detail: err });
   }
-
-  const photoUrls = req.files.map(file => `/images/banner/${file.filename}`);
-
-  db.query("INSERT INTO itemimage (PHOTO) VALUES (?)", [JSON.stringify(photoUrls)], (err, result) => {
-      if (err) return res.status(500).json({ error: "Database error", detail: err });
-
-      res.json({ success: true, images: photoUrls });
-  });
 });
+
 
 // GET method to fetch images from the database
 // router.get("/getimages/:id", (req, res) => {

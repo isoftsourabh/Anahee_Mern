@@ -21,7 +21,7 @@ const addProductData= require('../controllers/addProductData');
 const master = require('../controllers/master');
 const salesmaster = require('../controllers/salesmaster');
 const salesdetail = require('../controllers/salesdetail');
-
+const rfmaster = require('../controllers/rfmaster');
 
 router.post("/addProducts",addProductData.addProducts);
 router.get('/getCodeTypeData', addProductData.getCodeTypeData);
@@ -117,6 +117,7 @@ router.get("/getCustomer",customer.getCustomer);
 
 router.get("/getLable",lablemaster.getLable);
 
-
+router.get("/getrfmaster",rfmaster.getrfmaster);
+router.get("/getMasterSet",rfmaster.getMasterSet);
 
 module.exports = router
