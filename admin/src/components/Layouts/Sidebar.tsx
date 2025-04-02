@@ -1825,10 +1825,19 @@ const Sidebar = () => {
                                 <NavLink to="/Components/item-master" className="group">
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
-                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Item-Master')}</span>
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Item Master')}</span>
                                     </div>
                                 </NavLink>
                             </li>
+                            <li className="menu nav-item">
+                                <NavLink to="/Components/remotefromMaster" className="group">
+                                    <div className="flex items-center">
+                                        <IconMenuTables className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Remote From Master')}</span>
+                                    </div>
+                                </NavLink>
+                            </li>
+
                             {/* <li className="menu nav-item">
                                 <NavLink to="/components/exchange-policy" className="group">
                                     <div className="flex items-center">

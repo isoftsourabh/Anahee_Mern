@@ -15,6 +15,7 @@ import OrderList from '../pages/Components/OrderList';
 import OrderPreview from '../pages/Components/OrderPreview';
 import OrderAdd from '../pages/Components/OrderAdd';
 import OrderEdit from '../pages/Components/OrderEdit';
+import RemoteFromMaster from '../pages/Components/RemoteFromMaster';
 // import ExchangePolicy from /ExchangePolicy';
 const Index = lazy(() => import('../pages/Index'));
 const Analytics = lazy(() => import('../pages/Analytics'));
@@ -293,6 +294,10 @@ const routes = [
     {
         path: '/Components/item-master',
         element: <ItemMaster/>
+    },
+    {
+        path: '/Components/remotefromMaster',
+        element: <RemoteFromMaster/>
     },
     {
         path: '/components/exchange-policy',
