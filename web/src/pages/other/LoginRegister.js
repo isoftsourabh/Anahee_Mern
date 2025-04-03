@@ -49,7 +49,7 @@ const Login = () => {
     <>
       <SEO titleTemplate="Login" description="Login page of the eCommerce app." />
       <LayoutOne headerTop="visible">
-        <Breadcrumb pages={[{ label: "Home", path: "/" }, { label: "Login" }]} />
+        {/* <Breadcrumb pages={[{ label: "Home", path: "/" }, { label: "Login" }]} /> */}
         <div className="login-register-area pt-100 pb-100">
           <div className="container">
             <div className="row">

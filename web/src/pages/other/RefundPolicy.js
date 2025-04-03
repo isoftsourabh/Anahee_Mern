@@ -26,12 +26,12 @@ const RefundPolicy = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Refund Policy" description="Refund Policy page." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Refund Policy", path: pathname }
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (

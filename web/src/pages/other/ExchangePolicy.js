@@ -26,12 +26,12 @@ const ExchangePolicy = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Exchange Policy" description="Exchange Policy page." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Exchange Policy", path: pathname }
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (

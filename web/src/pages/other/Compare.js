@@ -25,12 +25,12 @@ const Compare = () => {
       />
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        {/* <Breadcrumb 
           pages={[
             {label: "Home", path: process.env.PUBLIC_URL + "/" },
             {label: "Compare", path: process.env.PUBLIC_URL + pathname }
           ]} 
-        />
+        /> */}
         <div className="compare-main-area pt-90 pb-100">
           <div className="container">
             {compareItems && compareItems.length >= 1 ? (

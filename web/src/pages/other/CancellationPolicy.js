@@ -31,12 +31,12 @@ const CancellationPolicy = () => {
         titleTemplate="Cancellation Policy"
         description="Cancellation Policy page."
       />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Cancellation Policy", path: pathname },
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (

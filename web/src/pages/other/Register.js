@@ -60,7 +60,7 @@ const Register = () => {
     <>
       <SEO titleTemplate="Register" description="Register page of the eCommerce app." />
       <LayoutOne headerTop="visible">
-        <Breadcrumb pages={[{ label: "Home", path: "/" }, { label: "Register", path: "/register" }]} />
+        {/* <Breadcrumb pages={[{ label: "Home", path: "/" }, { label: "Register", path: "/register" }]} /> */}
         <div className="login-register-area pt-100 pb-100">
           <div className="container">
             <div className="row">

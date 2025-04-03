@@ -15,12 +15,12 @@ const NotFound = () => {
       />
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        {/* <Breadcrumb 
           pages={[
             {label: "Home", path: process.env.PUBLIC_URL + "/" },
             {label: "404 page", path: process.env.PUBLIC_URL + pathname }
           ]} 
-        />
+        /> */}
         <div className="error-area pt-40 pb-100">
           <div className="container">
             <div className="row justify-content-center">

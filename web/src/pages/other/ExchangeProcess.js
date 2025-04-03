@@ -26,12 +26,12 @@ const ExchangeProcess = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Exchange Process" description="Learn about the exchange process for Anahee products." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Exchange Process", path: pathname }
         ]}
-      />
+      /> */}
      <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (
