@@ -59,12 +59,12 @@ const ShopListTwoColumn = ({ location }) => {
 
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        {/* <Breadcrumb 
           pages={[
             {label: "Home", path: process.env.PUBLIC_URL + "/" },
             {label: "Shop", path: process.env.PUBLIC_URL + pathname }
           ]} 
-        />
+        /> */}
 
         <div className="shop-area pt-95 pb-100">
           <div className="container-fluid">

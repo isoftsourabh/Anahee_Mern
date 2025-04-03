@@ -23,12 +23,12 @@ const ProductTabRight = () => {
 
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        {/* <Breadcrumb 
           pages={[
             {label: "Home", path: process.env.PUBLIC_URL + "/" },
             {label: "Shop Product", path: process.env.PUBLIC_URL + pathname }
           ]} 
-        />
+        /> */}
 
         {/* product description with image */}
         <ProductImageDescription

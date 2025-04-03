@@ -25,12 +25,12 @@ const Wishlist = () => {
       />
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        {/* <Breadcrumb 
           pages={[
             {label: "Home", path: process.env.PUBLIC_URL + "/" },
             {label: "Wishlist", path: process.env.PUBLIC_URL + pathname }
           ]} 
-        />
+        /> */}
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
             {wishlistItems && wishlistItems.length >= 1 ? (

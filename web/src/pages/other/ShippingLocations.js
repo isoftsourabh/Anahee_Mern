@@ -27,12 +27,12 @@ const ShippingLocations = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Shipping Locations" description="Shipping Locations page." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Shipping Locations", path: pathname }
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (

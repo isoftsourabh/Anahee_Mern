@@ -27,12 +27,12 @@ const TermsOfService = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Terms Of Service" description="Terms of Service page." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Terms of Service", path: pathname }
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (

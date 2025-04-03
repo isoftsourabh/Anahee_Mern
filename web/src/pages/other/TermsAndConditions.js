@@ -30,12 +30,12 @@ const TermsAndConditions = () => {
   return (
     <LayoutOne headerTop="visible">
       <SEO titleTemplate="Terms and Conditions" description="Terms and Conditions page." />
-      <Breadcrumb
+      {/* <Breadcrumb
         pages={[
           { label: "Home", path: "/" },
           { label: "Terms and Conditions", path: pathname }
         ]}
-      />
+      /> */}
       <div className="container mt-4">
         {policies.length > 0 ? (
           policies.map((policy, index) => (
