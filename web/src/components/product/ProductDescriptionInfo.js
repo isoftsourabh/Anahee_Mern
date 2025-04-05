@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
 import { addToCart } from "../../store/slices/cart-slice";
 import { addToWishlist } from "../../store/slices/wishlist-slice";
 import { addToCompare } from "../../store/slices/compare-slice";
+import { BASE_URL } from "../../config"
+import axios from 'axios'; 
 
 const ProductDescriptionInfo = ({
   product,
@@ -17,7 +19,7 @@ const ProductDescriptionInfo = ({
   cartItems,
   wishlistItem,
   compareItem,
-}) => {
+}) => {  console.log('product',product);
   const dispatch = useDispatch();
   const [selectedProductColor, setSelectedProductColor] = useState(
     product.variation ? product.variation[0].color : ""
@@ -37,11 +39,29 @@ const ProductDescriptionInfo = ({
     selectedProductSize
   );
   const [openDropdown, setOpenDropdown] = useState(null);
-
+  const [item, setItem] = useState([]);
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown); // If the same dropdown is clicked again, close it.
   };
-  
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/items/${id}`,{
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        console.log("Combined API response:", response.data);
+        setItem(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+    fetchData();
+  }, [id]);
+  console.log('item data',item);
   return (
    <div className="product-details-content ml-70">
       <h2>{product.name}</h2>

@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ExchangePolicy from "./pages/other/ExchangePolicy";
@@ -8,7 +8,10 @@ import CancellationPolicy from "./pages/other/CancellationPolicy";
 import ShippingLocations from "./pages/other/ShippingLocations";
 import TermsOfService from "./pages/other/TermsOfService";
 import RefundPolicy from "./pages/other/RefundPolicy";
-
+import { BASE_URL } from "./config"
+import axios from 'axios'; 
+import { setProducts } from "./store/slices/product-slice";
+import { store } from "./store/store";
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
 const HomeFashionTwo = lazy(() => import("./pages/home/HomeFashionTwo"));
@@ -112,6 +115,25 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const App = () => {
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/getallitems`,{
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      //console.log("Combined API response:", response.data);
+      
+      store.dispatch(setProducts(response.data.data));
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
+  fetchData();
+}, []);
+
   return (
       <Router>
         <ScrollToTop>

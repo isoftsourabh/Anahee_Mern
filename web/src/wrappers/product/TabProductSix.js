@@ -23,7 +23,7 @@ const TabProductSix = ({
           >
             <Nav.Item>
               <Nav.Link eventKey="newArrival">
-                <h4>New Arrivals</h4>
+                <h4>New Arrivals2</h4>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>

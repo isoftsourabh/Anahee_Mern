@@ -84,7 +84,7 @@ const ItemMaster: React.FC = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-    const maxNumber = 5; // Maximum number of images allowed
+    const maxNumber = 6; // Maximum number of images allowed
 
 
     

@@ -50,7 +50,7 @@ const ProductImageGallery = ({ product }) => {
   //   setLensPosition({ x: e.clientX - 75, y: e.clientY - 75 });
   // };
 
-  
+  console.log("process.env.REACT_APP_PUBLIC_URL",process.env.REACT_APP_PUBLIC_URL);
 
 
 
@@ -135,6 +135,7 @@ const ProductImageGallery = ({ product }) => {
         <button className="lightgallery-button" onClick={() => setIndex(key)}>
           <i className="pe-7s-expand1"></i>
         </button>
+<<<<<<< Updated upstream
         <div className="image-container">
           <div 
             className="single-image"
@@ -184,6 +185,27 @@ const ProductImageGallery = ({ product }) => {
     />
   </div>
           )}
+=======
+        <div 
+          className="single-image"
+          onMouseMove={handleMouseMove}
+        >
+          <img
+            ref={imgRef}
+            src={process.env.REACT_APP_PUBLIC_URL + single}
+            className="img-fluid"
+            alt=""
+          />
+          <div
+            className="magnifying-lens"
+            style={{
+              left: `${lensPosition.x}px`,
+              top: `${lensPosition.y}px`,
+              backgroundImage: `url(${process.env.REACT_APP_PUBLIC_URL + single})`,
+              backgroundPosition: backgroundPosition,
+            }}
+          />
+>>>>>>> Stashed changes
         </div>
       </SwiperSlide>
     ))}
@@ -205,7 +227,7 @@ const ProductImageGallery = ({ product }) => {
               <SwiperSlide key={key}>
                 <div className="single-image">
                   <img
-                    src={process.env.PUBLIC_URL + single}
+                    src={process.env.REACT_APP_PUBLIC_URL+ single}
                     className="img-fluid"
                     alt=""
                   />

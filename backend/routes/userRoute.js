@@ -39,6 +39,7 @@ router.get('/getNextSequence', addProductData.getNextSequence);
 
 router.post("/addItem",itemmaster.addItem);
 router.get("/items/:id",itemmaster.getItems);
+router.get("/getallitems",itemmaster.getallitems);
 router.put("/update/:id",itemmaster.updateItem);
 // router.put('/update/:id', upload.single('image'), itemController.updateItem);
 router.delete("/delete/:id",itemmaster.deleteItem);
