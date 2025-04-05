@@ -13,8 +13,14 @@ const Product = () => {
   let { id } = useParams();
   const { products } = useSelector((state) => state.product);
   const product = products.find(product => product.id === id);
-  
+  console.log("products page product id",id);
+  console.log("products page products data",products);
+  console.log("products page  single product data",product);
 
+  if(!product){
+    return <p>No product available</p>
+  }
+  
   return (
     <Fragment>
       <SEO

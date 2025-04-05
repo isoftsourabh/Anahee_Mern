@@ -306,36 +306,91 @@ exports.addItem = async (req, res) => {
 
 
 
-exports.getItems = async (req, res) => {
+exports.getItems = (req, res) => {
     const { id } = req.params;
-    try {
-        // Assuming image URLs are stored in a column named 'PHOTO' as a JSON string
-        await con.query("SELECT * FROM itemmaster WHERE ItemId = ?", [id], (err, result) => {
-            if (err) {
-                console.error("❌ Error fetching items:", err);
-                return res.status(500).json({ error: "Database error" });
-            }
-            if (result.length === 0) {
-                return res.status(404).json({ error: "Item not found" });
-            }
-            const item = result[0];
-            if (!item) {
-                return res.status(404).json({ error: "Item not found" });
-            }
-            try {
-                item.PHOTO = JSON.parse(item.PHOTO || '[]'); // Default to an empty array if null
-            } catch (parseError) {
-                console.error("❌ Error parsing PHOTO JSON:", parseError);
-                item.PHOTO = []; // Set to an empty array if parsing fails
-            }
-            console.log("Fetched Item:", item); // Log the fetched item
-            res.json({ items: [item] }); // Ensure items is an array
-        });
-    } catch (error) {
-        console.error("❌ Unexpected error:", error);
-        res.status(500).json({ error: "Server error" });
-    }
+
+    const query = `
+    SELECT 
+        itemmaster.*,
+        itemimage.*
+    FROM itemmaster
+    LEFT JOIN itemimage ON itemmaster.ITEMID = itemimage.ITEMID
+    WHERE itemmaster.ITEMID = ?;
+`;
+
+    con.query(query, [id], (err, result) => {
+        if (err) {
+            console.error("❌ Error fetching items:", err);
+            return res.status(500).json({ error: "Database error", details: err.message });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({ error: "Item not found" });
+        }
+
+        res.json({ success: true, data:result[0] });
+    });
 };
+
+exports.getallitems = (req, res) => {
+    console.log("called");
+
+    const query = `
+    SELECT 
+        itemmaster.*, 
+        itemimage.PHOTO 
+    FROM itemmaster
+    LEFT JOIN itemimage ON itemmaster.ITEMID = itemimage.ITEMID ORDER BY itemmaster.ITEMID ASC;
+    `;
+
+    con.query(query, (err, results) => {
+        if (err) {
+            console.error("❌ Error fetching items:", err);
+            return res.status(500).json({ error: "Database error", details: err.message });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: "No products found" });
+        }
+// console.log("results",results);
+        // Process each item to match the required format
+        const transformedItems = results.map(item => { 
+            return {
+                id: String(item.ITEMID),  
+                sku: item.BARCODE,  // Use the BARCODE as SKU
+                name: item.ITEMNAME,  // Item name
+                price: item.SALEPRICE,  // Sale price
+                discount: item.DISCOUNT ? item.DISCOUNT : 0,  // Default to 0 if DISCOUNT is null
+                offerEnd: "2024-10-05 12:11:00",  // Static value for offerEnd, you might want to change this
+                new: false,  // Static value, can be set dynamically
+                rating: 4,  // Placeholder for rating, adjust as needed
+                saleCount: 54,  // Placeholder for sale count, adjust as needed
+                category: item.CATEGORY ? [item.CATEGORY] : [],  // Assuming CATEGORY is a string, convert to array
+                tag: ["fashion", "men", "jacket", "full sleeve"],  // Static tags, adjust as needed
+                variation: [
+                    {
+                        color: item.COLOR,  // Use color from the data
+                        image: (item.PHOTO && item.PHOTO.split(",")[0]) || "",  // Use the first image in PHOTO if it exists
+                        size: [
+                            { name: "x", stock: 3 },
+                            { name: "m", stock: 2 },
+                            { name: "xl", stock: 5 }
+                        ]
+                    }
+                ],
+                image: (item.PHOTO && item.PHOTO.split(",")) || [],  // Split PHOTO into an array of images if it exists, otherwise return empty array
+                shortDescription: "Short description here",  // Placeholder for short description
+                fullDescription: "Full description here"  // Placeholder for full description
+            };
+        });
+
+        // Send the transformed data
+        res.json({ success: true, data: transformedItems });
+    });
+};
+
+
+
 
 // ✅ Update Item
 // exports.updateItem = async (req, res) => {
