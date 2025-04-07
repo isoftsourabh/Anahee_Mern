@@ -1,9 +1,10 @@
-import { EffectFade } from "swiper";
+import { Autoplay, EffectFade } from "swiper";
 import Swiper, { SwiperSlide } from "../../components/swiper";
 import heroSliderData from "../../data/hero-sliders/hero-slider-fourteen.json";
 import HeroSliderFourteenSingle from "../../components/hero-slider/HeroSliderFourteenSingle.js";
 import { Link } from "react-router-dom";
 import SectionTitleWithText from "../../components/section-title/SectionTitleWithText";
+import SectionTitleHome from "../../components/section-title/SectionTitleHome.js";
 
 const params = {
   effect: "fade",
@@ -15,6 +16,7 @@ const params = {
   speed: 1000,
   navigation: true,
   autoHeight: false,
+  // autoplay:true
 };
 
 const HeroSliderFourteen = () => {
@@ -100,6 +102,8 @@ const HeroSliderFourteen = () => {
 
         
         {/* <SectionTitleWithText spaceTopClass="pt-95" spaceBottomClass="pb-90" /> */}
+        <SectionTitleHome spaceTopClass="pt-95" spaceBottomClass="pb-90" />
+
 
         {/* <div
            class="full-width-banner-area parallax-window"

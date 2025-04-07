@@ -114,6 +114,8 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
+const SectionTitleHome= lazy(()=> import("./components/section-title/SectionTitleHome"))
+
 const App = () => {
 
 useEffect(() => {
@@ -425,6 +427,10 @@ useEffect(() => {
               <Route
                 path={process.env.PUBLIC_URL + "/refund-policy"}
                 element={<RefundPolicy/>}
+              />
+               <Route
+                path={process.env.PUBLIC_URL + "/components/section-title/SectionTitleHome"}
+                element={<SectionTitleHome/>}
               />
               <Route
                 path={process.env.PUBLIC_URL + "/my-account"}
