@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { setActiveSort } from "../../helpers/product";
 import { BASE_URL } from "../../config";
+import Accordion from 'react-bootstrap/Accordion';
 
 const ShopCategories = ({ getSortParams }) => {
   const [categories, setCategories] = useState([]);
@@ -40,7 +41,9 @@ const ShopCategories = ({ getSortParams }) => {
 
   return (
     <div className="sidebar-widget mt-40">
-      <h4 className="pro-sidebar-title">Categories</h4>
+      <Accordion.Item eventKey="0">
+      <Accordion.Header><h4 className="pro-sidebar-title">Categories</h4></Accordion.Header>
+      <Accordion.Body>
       <div className="sidebar-widget-list mt-20">
         {categories.length > 0 ? (
           <ul>
@@ -75,6 +78,8 @@ const ShopCategories = ({ getSortParams }) => {
           <p>No categories found</p>
         )}
       </div>
+      </Accordion.Body>
+      </Accordion.Item>
     </div>
   );
 };

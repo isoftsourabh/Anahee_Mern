@@ -17,7 +17,7 @@ const HeroSliderFourteenSingle = ({ data }) => {
                   <img src={process.env.PUBLIC_URL + data.titleImage} alt="Title Logo" className="title-logo" />  
                 )}  
               </h1>   */}
-              <p className="animated">{data.subtitle}</p>  
+              {/* <p className="animated">{data.subtitle}</p>   */}
               <div className="slider-btn-5 btn-hover">  
                 <Link  
                   className="animated"  

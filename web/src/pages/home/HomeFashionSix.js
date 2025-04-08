@@ -72,7 +72,7 @@ const HomeFashionSix = () => {
       case "newarrivals":
         return (
           <TabProductEight
-            spaceBottomClass="pb-70"
+            spaceBottomClass="pb-10"
             category="fashion"
             sectionTitle={false}
           />

@@ -31,7 +31,7 @@ const Compare = () => {
             {label: "Compare", path: process.env.PUBLIC_URL + pathname }
           ]} 
         /> */}
-        <div className="compare-main-area pt-90 pb-100">
+        <div className="compare-main-area pt-10 pb-30">
           <div className="container">
             {compareItems && compareItems.length >= 1 ? (
               <div className="row">
@@ -68,7 +68,7 @@ const Compare = () => {
                                     <img
                                       className="img-fluid"
                                       src={
-                                        process.env.PUBLIC_URL +
+                                        process.env.REACT_APP_PUBLIC_URL +
                                         compareItem.image[0]
                                       }
                                       alt=""

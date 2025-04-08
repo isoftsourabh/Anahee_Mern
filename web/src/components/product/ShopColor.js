@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { setActiveSort } from "../../helpers/product";
 import { BASE_URL } from "../../config";
+import Accordion from 'react-bootstrap/Accordion';
 
 const ShopColor = ({ getSortParams }) => {
   const [colors, setColors] = useState([]);
@@ -21,7 +22,7 @@ const ShopColor = ({ getSortParams }) => {
           },
         });
 
-        console.log(response);
+        //console.log(response);
 
         if (Array.isArray(response.data)) {
           setColors(response.data);
@@ -40,7 +41,9 @@ const ShopColor = ({ getSortParams }) => {
 
   return (
     <div className="sidebar-widget mt-50">
-      <h4 className="pro-sidebar-title">Color</h4>
+      <Accordion.Item eventKey="1">
+      <Accordion.Header><h4 className="pro-sidebar-title">Color</h4></Accordion.Header>
+      <Accordion.Body>
       <div className="sidebar-widget-list mt-20">
         {colors.length > 0 ? (
           <ul>
@@ -75,6 +78,8 @@ const ShopColor = ({ getSortParams }) => {
           "No colors found"
         )}
       </div>
+      </Accordion.Body>
+      </Accordion.Item>
     </div>
   );
 };
