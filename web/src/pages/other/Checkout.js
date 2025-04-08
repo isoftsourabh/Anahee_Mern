@@ -67,7 +67,7 @@ const Checkout = () => {
             { label: "Checkout", path: process.env.PUBLIC_URL + pathname },
           ]}
         /> */}
-        <div className="checkout-area pt-95 pb-100">
+        <div className="checkout-area pt-10 pb-30">
           <div className="container">
             {cartItems && cartItems.length >= 1 ? (
               <div className="row">

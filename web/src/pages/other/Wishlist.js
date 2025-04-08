@@ -31,7 +31,7 @@ const Wishlist = () => {
             {label: "Wishlist", path: process.env.PUBLIC_URL + pathname }
           ]} 
         /> */}
-        <div className="cart-main-area pt-90 pb-100">
+        <div className="cart-main-area pt-10 pb-30">
           <div className="container">
             {wishlistItems && wishlistItems.length >= 1 ? (
               <Fragment>
@@ -77,7 +77,7 @@ const Wishlist = () => {
                                     <img
                                       className="img-fluid"
                                       src={
-                                        process.env.PUBLIC_URL +
+                                        process.env.REACT_APP_PUBLIC_URL +
                                         wishlistItem.image[0]
                                       }
                                       alt=""

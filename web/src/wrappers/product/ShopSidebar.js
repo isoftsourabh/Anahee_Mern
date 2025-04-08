@@ -11,6 +11,7 @@ import ShopCategories from "../../components/product/ShopCategories";
 import ShopColor from "../../components/product/ShopColor";
 import ShopSize from "../../components/product/ShopSize";
 import ShopTag from "../../components/product/ShopTag";
+import Accordion from 'react-bootstrap/Accordion';
 
 const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
   const uniqueCategories = getIndividualCategories(products);
@@ -20,6 +21,7 @@ const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
 
   return (
     <div className={clsx("sidebar-style", sideSpaceClass)}>
+      <Accordion defaultActiveKey="0">
       {/* shop search */}
       <ShopSearch />
 
@@ -37,6 +39,7 @@ const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
 
       {/* filter by tag */}
       {/* <ShopTag tags={uniqueTags} getSortParams={getSortParams} /> */}
+      </Accordion>
     </div>
   );
 };

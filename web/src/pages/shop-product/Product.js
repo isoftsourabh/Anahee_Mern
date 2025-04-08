@@ -39,20 +39,20 @@ const Product = () => {
 
         {/* product description with image */}
         <ProductImageDescription
-          spaceTopClass="pt-100"
-          spaceBottomClass="pb-100"
+          spaceTopClass="pt-10"
+          spaceBottomClass="pb-10"
           product={product}
         />
 
         {/* product description tab */}
         <ProductDescriptionTab
-          spaceBottomClass="pb-90"
+          spaceBottomClass="pb-0"
           productFullDesc={product.fullDescription}
         />
 
         {/* related product slider */}
         <RelatedProductSlider
-          spaceBottomClass="pb-95"
+          spaceBottomClass="pb-20"
           category={product.category[0]}
         />
       </LayoutOne>

@@ -11,12 +11,15 @@ const params = {
   fadeEffect: {
     crossFade: true,
   },
-  modules: [EffectFade],
+  modules: [EffectFade,Autoplay],
   loop: true,
   speed: 1000,
   navigation: true,
   autoHeight: false,
-  // autoplay:true
+  autoplay: {
+    delay: 5000, // Auto transition every 5 seconds
+    disableOnInteraction: false, // Allow autoplay to continue after user interaction
+  },
 };
 
 const HeroSliderFourteen = () => {
