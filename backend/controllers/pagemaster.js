@@ -4,90 +4,38 @@ const util = require("util");
 
 const query = util.promisify(con.query).bind(con);
 
-// Save Exchange Policy Content
-// exports.addPolicy = async (req, res) => {
-//     try {
-//         const { companyid, sectionname, content } = req.body;
-
-//         if (!content || !companyid || !sectionname) {
-//             return res.status(400).json({ error: "companyid, sectionname, and content are required" });
-//         }
-
-//         const sql = `
-//             INSERT INTO page_master (companyid, sectionname, content)
-//             VALUES (?, ?, ?)
-//             ON DUPLICATE KEY UPDATE content = VALUES(content)
-//         `;
-
-//         await query(sql, [companyid, sectionname, content]);
-//         res.status(200).json({ success: true, message: "Exchange policy saved successfully!" });
-
-//     } catch (error) {
-//         console.error("Error saving policy:", error);
-//         res.status(500).json({ error: "Database error", details: error.message });
-//     }
-// };
-
-// Save Exchange Policy Content
 exports.addPolicy = async (req, res) => {
     try {
-        const { companyid, sectionname, content } = req.body;
-
-        if (!content || !companyid || !sectionname) {
-            return res.status(400).json({ error: "companyid, sectionname, and content are required" });
-        }
-
+      const { companyid, sectionname, content, id } = req.body;
+  
+      if (!companyid || !sectionname || !content) {
+        return res.status(400).json({ error: "companyid, sectionname, and content are required" });
+      }
+  
+      if (id) {
         const sql = `
-            INSERT INTO page_master (companyid, sectionname, content)
-            VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE content = VALUES(content)
+          UPDATE page_master
+          SET content = ?, sectionname = ?
+          WHERE id = ? AND companyid = ?
         `;
-
+        await query(sql, [content, sectionname, id, companyid]);
+        return res.status(200).json({ success: true, message: sectionname + " updated successfully!" });
+      } else {
+        const sql = `
+          INSERT INTO page_master (companyid, sectionname, content)
+          VALUES (?, ?, ?)
+          ON DUPLICATE KEY UPDATE content = VALUES(content)
+        `;
         await query(sql, [companyid, sectionname, content]);
-        res.status(200).json({ success: true, message: "Exchange policy saved successfully!" });
-
+        return res.status(200).json({ success: true, message: sectionname + " saved successfully!" });
+      }
+  
     } catch (error) {
-        console.error("Error saving policy:", error);
-        res.status(500).json({ error: "Database error", details: error.message });
+      console.error("Error saving policy:", error);
+      res.status(500).json({ error: "Database error", details: error.message });
     }
-};
-
-
-// exports.getPolicy = async (req, res) => {
-//     try {
-//         let { companyid, sectionname} = req.query;
-
-//         if (!companyid || !sectionname) {
-//             return res.status(400).json({ error: "companyid and sectionname is required" });
-//         }
-
-//          // Normalize section name to lowercase to avoid mismatch
-//          sectionname = sectionname.trim().toLowerCase();
-
-//         const sql = "SELECT sectionname, content FROM page_master WHERE companyid = ? AND sectionname = ?";
-//         const result = await query(sql, [companyid, sectionname]);
-
-//         console.log("Database Query Result:", result); // Debugging output
-
-
-//         if (result.length === 0) {
-//             return res.status(200).json({ policies: [] }); // Ensure frontend receives an empty array instead of undefined
-//         }
-
-//         res.status(200).json({ policies: result });
-//         // res.status(200).json({ terms: result });
-//         // const terms = result.filter(item => item.type === 'term');
-//         // const policies = result.filter(item => item.type === 'policy');
-
-//         // res.status(200).json({ terms, policies });
-
-
-//     } catch (error) {
-//         console.error("Error fetching policies:", error);
-//         res.status(500).json({ error: "Database error", details: error.message });
-//     }
-// };
-
+  };
+  
 
 exports.getPolicy = async (req, res) => {
     try {
@@ -116,45 +64,36 @@ exports.getPolicy = async (req, res) => {
 
 
 
-// exports.getPolicy = async (req, res) => {
-//     try {
-//         const { companyid } = req.query;
+exports.getPageInfo = async (req, res) => {
+    try {
+        const { companyid, id } = req.query;  // Extract companyid and id from query parameters
 
-//         if (!companyid) {
-//             return res.status(400).json({ error: "companyid is required" });
-//         }
+        if (!companyid || !id) {
+            return res.status(400).json({ error: 'companyid and id are required' });
+        }
 
-//         const sql = "SELECT sectionname, content FROM page_master WHERE companyid = ?";
-//         const result = await query(sql, [companyid]);
-//         console.log("Database Query Result:", result); // Debugging output
-
-//         res.status(200).json({ policies: result });
-
-//     } catch (error) {
-//         console.error("Error fetching policies:", error);
-//         res.status(500).json({ error: "Database error", details: error.message });
-//     }
-// };
-
-
-
-
-// Fetch Exchange Policy Content
-// exports.getPolicy = async (req, res) => {
-//     try {
-//         const { companyid, sectionname } = req.query;
-
-//         if (!companyid || !sectionname) {
-//             return res.status(400).json({ error: "companyid and sectionname are required" });
-//         }
-
-//         const sql = "SELECT content FROM page_master WHERE companyid = ? AND sectionname = ? LIMIT 1";
-//         const result = await query(sql, [companyid, sectionname]);
-
-//         res.status(200).json({ content: result.length > 0 ? result[0].content : "" });
-
-//     } catch (error) {
-//         console.error("Error fetching policy:", error);
-//         res.status(500).json({ error: "Database error", details: error.message });
-//     }
-// };
+        const query = 'SELECT content,sectionname FROM page_master WHERE companyid = ? AND id = ?';
+        
+        const results = await new Promise((resolve, reject) => {
+            con.query(query, [companyid, id], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+       
+        res.json({
+            content: results[0].content, 
+            sectionname: results[0].sectionname
+        });
+      
+    } catch (error) {
+        console.error("Error fetching policies:", error);
+        res.status(500).json({ 
+            error: "Database error", 
+            details: error.message 
+        });
+    }
+};

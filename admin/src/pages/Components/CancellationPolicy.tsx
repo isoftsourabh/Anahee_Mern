@@ -12,10 +12,10 @@ const CancellationPolicy: React.FC = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/get-exchange-policy`);
+        const response = await fetch(`${BASE_URL}/get-page-info?companyid=1&id=11`);
         const data = await response.json();
         setContent(data.content || "");
-        setSectionname(data.sectionname || "Cancellation Policy");
+        setSectionname(data.sectionname || "");
       } catch (error) {
         console.error("Error fetching cancellation policy:", error);
       }
@@ -26,13 +26,14 @@ const CancellationPolicy: React.FC = () => {
   // Save the updated content
   const handleSave = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/save-exchange-policy`, {
+      const response = await fetch(`${BASE_URL}/save-page-info`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           companyid: "1",
+          id:"11",
           sectionname,
           content,
         }),
@@ -41,8 +42,6 @@ const CancellationPolicy: React.FC = () => {
       const data = await response.json();
       if (data.success) {
         alert("Cancellation policy saved successfully!");
-        setContent("");
-        setSectionname("");
       } else {
         alert("Failed to save policy.");
       }
