@@ -12,9 +12,10 @@ const ShippingLocations: React.FC = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/get-exchange-policy`);
+        const response = await fetch(`${BASE_URL}/get-page-info?companyid=1&id=12`);
         const data = await response.json();
         setContent(data.content || "");
+        setSectionname(data.sectionname || "");
       } catch (error) {
         console.error("Error fetching shipping locations:", error);
       }
@@ -25,13 +26,14 @@ const ShippingLocations: React.FC = () => {
   // Save the updated content
   const handleSave = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/save-exchange-policy`, {
+      const response = await fetch(`${BASE_URL}/save-page-info`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           companyid: "1",
+          id:"12",
           sectionname,
           content,
         }),
@@ -40,8 +42,6 @@ const ShippingLocations: React.FC = () => {
       const data = await response.json();
       if (data.success) {
         alert("Shipping locations saved successfully!");
-        setContent("");
-        setSectionname("");
       } else {
         alert("Failed to save shipping locations.");
       }

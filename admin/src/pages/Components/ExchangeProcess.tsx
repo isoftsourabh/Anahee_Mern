@@ -12,9 +12,10 @@ const ExchangeProcess: React.FC = () => {
   useEffect(() => {
     const fetchProcess = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/get-exchange-policy`);
+        const response = await fetch(`${BASE_URL}/get-page-info?companyid=1&id=10`);
         const data = await response.json();
         setContent(data.content || "");
+        setSectionname(data.sectionname || "");
       } catch (error) {
         console.error("Error fetching exchange process:", error);
       }
@@ -32,6 +33,7 @@ const ExchangeProcess: React.FC = () => {
         },
         body: JSON.stringify({
           companyid: "1",
+          id:"10",
           sectionname,
           content,
         }),
@@ -40,8 +42,6 @@ const ExchangeProcess: React.FC = () => {
       const data = await response.json();
       if (data.success) {
         alert("Exchange process saved successfully!");
-        setContent("");
-        setSectionname("");
       } else {
         alert("Failed to save process.");
       }

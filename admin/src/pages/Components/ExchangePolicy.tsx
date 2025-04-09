@@ -13,9 +13,10 @@ const ExchangePolicy: React.FC = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/get-exchange-policy`);
+        const response = await fetch(`${BASE_URL}/get-page-info?companyid=1&id=6`);
         const data = await response.json();
         setContent(data.content || "");
+        setSectionname(data.sectionname || "");
       } catch (error) {
         console.error("Error fetching exchange policy:", error);
       }
@@ -26,13 +27,14 @@ const ExchangePolicy: React.FC = () => {
   // Save the updated content
   const handleSave = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/save-exchange-policy`, {
+      const response = await fetch(`${BASE_URL}/save-page-info`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           companyid: "1",
+          id:"6",
           sectionname,
           content,
         }),
@@ -40,9 +42,7 @@ const ExchangePolicy: React.FC = () => {
 
       const data = await response.json();
       if (data.success) {
-        alert("Exchange policy saved successfully!");
-        setContent("");
-      setSectionname("");
+        alert(`${sectionname} policy saved successfully!`);
       } else {
         alert("Failed to save policy.");
       }

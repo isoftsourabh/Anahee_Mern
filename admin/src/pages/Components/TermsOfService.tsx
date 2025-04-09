@@ -12,10 +12,10 @@ const TermsOfService: React.FC = () => {
   useEffect(() => {
     const fetchTerms = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/get-exchange-policy`);
+        const response = await fetch(`${BASE_URL}/get-page-info?companyid=1&id=14`);
         const data = await response.json();
         setContent(data.content || "");
-        setSectionname(data.sectionname || "Terms of Service");
+        setSectionname(data.sectionname || "");
       } catch (error) {
         console.error("Error fetching terms of service:", error);
       }
@@ -26,13 +26,14 @@ const TermsOfService: React.FC = () => {
   // Save the updated content
   const handleSave = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/save-exchange-policy`, {
+      const response = await fetch(`${BASE_URL}/save-page-info`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           companyid: "1",
+          id:"14",
           sectionname,
           content,
         }),

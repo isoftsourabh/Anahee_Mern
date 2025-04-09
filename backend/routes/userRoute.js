@@ -52,6 +52,8 @@ router.get('./postcsbAW',fillCombo.postcsbAW);
 
 router.post("/save-exchange-policy",pagemaster.addPolicy);
 router.get("/get-exchange-policy",pagemaster.getPolicy);
+router.get("/get-page-info",pagemaster.getPageInfo);
+router.post("/save-page-info",pagemaster.addPolicy);
 
 
 // Define the route with SALEID as a URL parameter
