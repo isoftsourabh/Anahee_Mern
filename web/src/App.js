@@ -111,6 +111,7 @@ const Cart = lazy(() => import("./pages/other/Cart"));
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
+const Success = lazy(() => import("./pages/other/Success"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
@@ -126,7 +127,7 @@ useEffect(() => {
           "Content-Type": "application/json"
         }
       });
-      //console.log("Combined API response:", response.data);
+      console.log("Combined API response 00011:", response.data.data);
       
       store.dispatch(setProducts(response.data.data));
     } catch (error) {
@@ -461,7 +462,10 @@ useEffect(() => {
                 path={process.env.PUBLIC_URL + "/checkout"}
                 element={<Checkout/>}
               /> 
-
+              <Route
+                path={process.env.PUBLIC_URL + "/success"}
+                element={<Success/>}
+              />
               <Route path="*" element={<NotFound/>} />
             </Routes>
           </Suspense>

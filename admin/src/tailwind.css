@@ -709,3 +709,1138 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
 pre.hljs {
     @apply p-6 rounded-md overflow-x-auto !bg-[#191e3a];
 }
+
+
+   /* AddContact  */
+   /* AddCompany.css */
+   .add-company-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .customers-list-button {
+    background-color: #007bff; /* Example blue color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+    align-self: flex-start; /* Align to the left */
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #007bff; /* Highlight on focus */
+  }
+  
+ /* Master Billing */
+ /* AddMinimumBilling.css */
+.add-minimum-billing-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .billing-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .form-group input[type='text'] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: flex-end;
+  }
+  
+  .update-button,
+  .reset-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .update-button {
+    background-color: #28a745; /* Green */
+    color: white;
+  }
+  
+  .update-button:hover {
+    background-color: #1e7e34;
+  }
+  
+  .reset-button {
+    background-color: #f8f9fa; /* Light gray */
+    color: #495057; /* Dark gray */
+    border: 1px solid #ced4da;
+  }
+  
+  .reset-button:hover {
+    background-color: #e2e6ea;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .billing-form {
+      padding: 20px;
+      margin: 10px;
+      border-radius: 6px;
+    }
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .form-group label {
+      font-size: 14px;
+    }
+  
+    .form-group input[type='text'] {
+      padding: 8px;
+      font-size: 14px;
+    }
+  
+    .button-group {
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+  
+    .update-button,
+    .reset-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  } 
+  
+  /* Users */
+  /* UserList.css */
+.user-list-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .action-bar {
+    margin-bottom: 20px;
+  }
+  
+  .add-user-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .status-filter,
+  .export-buttons,
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .status-filter select,
+  .export-buttons select,
+  .search-bar input[type='text'] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Adjust as needed */
+  }
+  
+  thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .edit-button {
+    background-color: #ffc107; /* Yellow/Amber for edit */
+    color: #212529;
+  }
+  
+  .delete-button {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+  }
+  
+  .list-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .pagination-controls button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .filter-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+  
+    .export-buttons {
+      order: 1; /* Move below status filter */
+    }
+  
+    .search-bar {
+      order: 2; /* Move below export buttons */
+    }
+  }
+  
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 600px) {
+    .form-grid {
+      grid-template-columns: 1fr; /* Stack fields on smaller screens */
+    }
+  
+    .button-container {
+      justify-content: center; /* Center buttons on smaller screens */
+    }
+  
+    .customers-list-button {
+      align-self: stretch; /* Make button full width on smaller screens */
+    }
+  }
+
+  /* Promotion Banner */
+  /* PromotionBanners.css */
+.promotion-banners-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .upload-section {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .promo-banners-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    align-self: flex-start;
+  }
+  
+  .upload-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .choose-file-label {
+    font-weight: bold;
+  }
+  
+  .upload-controls input[type="file"] {
+    flex-grow: 1;
+  }
+  
+  .upload-controls span {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .save-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .note {
+    color: red;
+    font-size: 0.9em;
+  }
+  
+  .banners-list {
+    overflow-x: auto; /* Enable horizontal scrolling for the table on smaller screens */
+  }
+  
+  .banners-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .banners-list th,
+  .banners-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in table cells */
+  }
+  
+  .banners-list th {
+    background-color: #f0f0f0;
+  }
+  
+  .banner-image {
+    max-width: 150px; /* Adjust as needed */
+    height: auto;
+    display: block;
+  }
+  
+  /* customerList */
+  /* CompanyList.css */
+.company-list-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .add-company-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+  }
+  
+  .list-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 10px;
+  }
+  
+  .show-entries,
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: #9e9d9d;
+  }
+  
+  .table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling for the table on smaller screens */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Ensure table doesn't collapse too much */
+  }
+  
+  thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #9e9d9d;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .edit-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .list-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .pagination-controls button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* App Theme */
+  /* AppTheme.css */
+.app-theme-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start; /* Align content to the left */
+  }
+  
+  .theme-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+    width: 100%; /* Make the selector take full width */
+  }
+  
+  .color-input-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .color-input-container input[type="color"] {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .color-input-container input[type="text"] {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .save-button,
+  .reset-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .save-button {
+    background-color: #28a745; /* Green */
+    color: white;
+  }
+  
+  .reset-button {
+    background-color: #f8f9fa; /* Light gray */
+    color: #495057; /* Dark gray */
+    border: 1px solid #ced4da;
+  }
+
+  /* Login Setting */
+ /* LoginSettings.css */
+.login-settings-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Optional: Fill the viewport height */
+    background-color: #f4f6f8; /* Light background */
+  }
+  
+  .settings-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limit the width on larger screens */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 25px;
+    color: #555;
+    text-align: center;
+  }
+  
+  .login-options-card {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .login-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .login-option:hover {
+    background-color: #eee;
+  }
+  
+  .login-option input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .login-option.selected {
+    background-color: #e3f2fd; /* Light blue for selected */
+    border-color: #90caf9;
+  }
+  
+  .save-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%; /* Make button full width inside the card */
+  }
+  
+  .save-button:hover:enabled {
+    background-color: #0056b3;
+  }
+  
+  .save-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .settings-container {
+      padding: 20px;
+      margin: 10px;
+      border-radius: 6px;
+    }
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+  
+    h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  
+    .login-options-card {
+      padding: 15px;
+      gap: 10px;
+    }
+  
+    .login-option {
+      padding: 8px;
+    }
+  
+    .save-button {
+      padding: 10px 16px;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+  }
+
+  
+  
+
+/* Capion Master */
+/* LabelSettings.css */
+.label-settings-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Optional: Fill the viewport height */
+    background-color: #f4f6f8; /* Light background */
+  }
+  
+  .settings-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Limit the width on larger screens */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .label-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .label-input-group label {
+    width: 50px; /* Adjust label width as needed */
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .label-input-group input[type='text'] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .update-button {
+    background-color: #28a745; /* Green */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+  }
+  
+  .update-button:hover {
+    background-color: #1e7e34;
+  }
+
+  /* Discount Coupen */
+  /* DiscountCouponList.css */
+.discount-coupon-list-page {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .add-discount-coupon-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    align-self: flex-start;
+  }
+  
+  .list-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .show-entries,
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; /* Adjust as needed */
+  }
+  
+  thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .edit-button,
+  .toggle-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .edit-button {
+    background-color: #19b614; /* green/Amber for edit */
+    color: #212529;
+  }
+  
+  .toggle-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .toggle-button.inactive {
+    background-color: #dc3545;
+  }
+  
+  .list-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .pagination-controls button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .list-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .add-discount-coupon-button {
+      align-self: stretch;
+    }
+  }
+
+
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .settings-container {
+      padding: 20px;
+      margin: 10px;
+      border-radius: 6px;
+    }
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .label-input-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  
+    .label-input-group label {
+      width: auto;
+      font-weight: normal;
+    }
+  
+    .update-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .list-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .add-wallet-details-button {
+      align-self: stretch;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 400px) {
+    .settings-container {
+      padding: 15px;
+    }
+  
+    .login-option {
+      padding: 8px;
+    }
+  
+    .login-option input[type="radio"] {
+      margin-right: 8px;
+    }
+  
+    .save-button {
+      font-size: 14px;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .theme-selector {
+      width: 100%;
+    }
+  
+    .color-input-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .color-input-container input[type="color"],
+    .color-input-container input[type="text"] {
+      width: 100%;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .save-button,
+    .reset-button {
+      width: 100%;
+    }
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 600px) {
+    .list-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .add-company-button {
+      align-self: stretch;
+    }
+  
+    .table-responsive {
+      margin-bottom: 15px; /* Add some space below the scrolling table */
+    }
+  
+    .list-pagination {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .upload-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .promo-banners-button {
+      align-self: stretch;
+    }
+  
+    .banner-image {
+      max-width: 100%;
+    }
+  }
+
+
+
+  /* Customer Start */
+  .customer-list-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  
+  .table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for the "Add Customer" modal */
+  .add-customer-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .add-customer-modal h2 {
+    margin-bottom: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+  
+  /* Responsive adjustments (example using media queries) */
+  @media (max-width: 768px) {
+    table {
+      font-size: 0.8em;
+    }
+  
+    th, td {
+      padding: 6px;
+    }
+  }
+   /* Customer End */

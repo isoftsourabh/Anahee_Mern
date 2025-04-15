@@ -4,6 +4,7 @@ import { BASE_URL } from '../../config';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import IconPencil from '../../components/Icon/IconPencil';
+import Setting from './../../components/Layouts/Setting';
 
 const HideSeek = () => {
     const [companyid] = useState(1001);
@@ -106,7 +107,7 @@ const HideSeek = () => {
 
     return (
         <div className="p-6">
-            <h2 className="text-xl font-bold text-center">Home Page</h2>
+            <h2 className="text-xl font-bold text-center">Layout Setting</h2>
 
             {/* Form */}
             <form onSubmit={submitForm} className="max-w-lg mx-auto space-y-4">

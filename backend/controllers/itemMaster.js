@@ -333,8 +333,7 @@ exports.getItems = (req, res) => {
 };
 
 exports.getallitems = (req, res) => {
-    console.log("called");
-
+    
     const query = `
     SELECT 
         itemmaster.*, 
