@@ -29,7 +29,8 @@ const storage = multer.diskStorage({
     cb(null, "public/images/banner/"); // Save in "public/images/banner" folder
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    const uniqueName = `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`;
+    cb(null, uniqueName);
   },
 });
 
@@ -42,7 +43,8 @@ router.post("/upload", upload.single("image"), (req, res) => {
   }
 
   const { sec_name, des_l1, des_l2, des_l3 } = req.body; // Get sec_name from request
-  const imageUrl = req.file.originalname;
+  const imageUrl = req.file.filename;
+  //const uniqueFilename = imageUrl.replace(/\s+/g, '_').replace(/\..+$/, `_${Date.now()}$&`);
 
   // Fetch the next sequence number
   db.query("SELECT COUNT(*) AS count FROM HP_Images", (err, result) => {
@@ -62,7 +64,7 @@ router.post("/upload", upload.single("image"), (req, res) => {
 
       res.json({
         success: true,
-        image: { id: result.insertId, filename: req.file.originalname, sequence: nextSequence, status: 1, sec_name, des_l1, des_l2, des_l3 },
+        image: { id: result.insertId, filename: req.file.filename, sequence: nextSequence, status: 1, sec_name, des_l1, des_l2, des_l3 },
       });
     });
   });

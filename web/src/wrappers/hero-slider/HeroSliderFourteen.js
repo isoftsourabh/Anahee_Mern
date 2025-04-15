@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Autoplay, EffectFade } from "swiper";
 import Swiper, { SwiperSlide } from "../../components/swiper";
 import heroSliderData from "../../data/hero-sliders/hero-slider-fourteen.json";
@@ -5,6 +6,7 @@ import HeroSliderFourteenSingle from "../../components/hero-slider/HeroSliderFou
 import { Link } from "react-router-dom";
 import SectionTitleWithText from "../../components/section-title/SectionTitleWithText";
 import SectionTitleHome from "../../components/section-title/SectionTitleHome.js";
+import axios from "axios";
 
 const params = {
   effect: "fade",
@@ -23,16 +25,38 @@ const params = {
 };
 
 const HeroSliderFourteen = () => {
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_PUBLIC_URL}/images`)
+      .then((response) => {
+        console.log("✅ API Response: 999999999", response.data); 
+        setBanners(response.data.images);
+      })
+      .catch((error) => {
+        console.error("❌ Error fetching banners:", error);
+      });
+  }, []);
+
   return (
     <>
        <div className="slider-area">  
       <div className="slider-active-2 nav-style-3">  
         <Swiper options={params} className="overflow-hidden">  
-          {heroSliderData?.map((single, key) => (  
+          {/* {heroSliderData?.map((single, key) => (  
             <SwiperSlide key={key}>  
               <HeroSliderFourteenSingle data={single} />  
             </SwiperSlide>  
-          ))}  
+          ))}  */}
+          {banners.length >= 2 && (
+            banners.slice(36, 39).map((single, key) => (
+              <SwiperSlide key={key}>  
+                <HeroSliderFourteenSingle data={single} />  
+              </SwiperSlide>  
+            ))
+          ) }
+           
         </Swiper>  
       </div>  
     </div>  
