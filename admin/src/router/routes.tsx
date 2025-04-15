@@ -16,6 +16,34 @@ import OrderPreview from '../pages/Components/OrderPreview';
 import OrderAdd from '../pages/Components/OrderAdd';
 import OrderEdit from '../pages/Components/OrderEdit';
 import RemoteFromMaster from '../pages/Components/RemoteFromMaster';
+import ReportFromStock from '../pages/Components/ReportFromStock';
+import FormMaster from '../pages/Components/FormMaster';
+import StoreMaster from '../pages/Components/StoreMaster';
+import AppVersion from '../pages/Components/AppVersion';
+import SmsSetting from '../pages/Components/SmsSetting';
+import AddSmsSettings from '../pages/Components/AddSmsSetting';
+import PaymentSetting from '../pages/Components/PaymentSetting';
+import NotificationKey from '../pages/Components/NotificationKey';
+import Report from '../pages/Components/Report';
+import ProductWiseReport from '../pages/Components/ProductWiseReport';
+import MasterSetting from '../pages/Components/MasterSetting';
+import PromotionBanners from '../pages/Components/PromotionBanner';
+import AddContact from '../pages/Components/AddContact';
+import CustomerList from '../pages/Components/CustomerList';
+import AppTheme from '../pages/Components/AppTheme';
+import DeliveryCharges from '../pages/Components/DeliveryCharges';
+import LoginSettings from '../pages/Components/LoginSettings';
+import WalletDetail from '../pages/Components/WalletDetails';
+import CaptionMaster from '../pages/Components/CaptionMaster';
+import DiscountCouponList from '../pages/Components/DiscountCouponList';
+import MinimumBillingSetting from '../pages/Components/MinimumBillingSetting';
+import Users from '../pages/Components/Users';
+import Register from '../pages/Components/Register';
+import Notifications from '../pages/Components/Notifications';
+// import CustomersL from '../pages/Components/CustomersL';
+import AddCustomer from '../pages/Components/AddCustomer';
+import CustomersL from '../pages/Components/CustomerL';
+
 // import ExchangePolicy from /ExchangePolicy';
 const Index = lazy(() => import('../pages/Index'));
 const Analytics = lazy(() => import('../pages/Analytics'));
@@ -284,7 +312,7 @@ const routes = [
         element: <MediaObject />,
     },
     {
-        path: '/Components/HideSeek',
+        path: '/Components/layoutsetting',
         element: <HideSeek/>
     },
     {
@@ -298,6 +326,14 @@ const routes = [
     {
         path: '/Components/remotefromMaster',
         element: <RemoteFromMaster/>
+    },
+    {
+        path: '/Components/formmaster',
+        element: <FormMaster/>
+    },
+    {
+        path: '/Components/reportfromstock',
+        element: <ReportFromStock/>
     },
     {
         path: '/components/exchange-policy',
@@ -330,6 +366,102 @@ const routes = [
     {
         path: '/Components/discountcoupon',
         element: <DiscountCoupan />
+    },
+    {
+        path: '/Components/storemaster',
+        element: <StoreMaster />
+    },
+      {
+        path: '/Components/appversion',
+        element: <AppVersion />
+    },
+    {
+        path: '/Components/smssetting',
+        element: <SmsSetting />
+    },
+    {
+        path: '/Components/addsmssettings',
+        element: <AddSmsSettings />
+    },
+    {
+        path: '/Components/paymentsetting',
+        element: <PaymentSetting />
+    },
+    {
+        path: '/Components/notificationkey',
+        element: <NotificationKey />
+    },
+    {
+        path: '/Components/report',
+        element: <Report />
+    },
+    {
+        path: '/Components/productwisereport',
+        element: <ProductWiseReport />
+    },
+    {
+        path: '/Components/mastersetting',
+        element: <MasterSetting />
+    },
+    {
+        path: '/Components/promotionbanners',
+        element: <PromotionBanners />
+    },
+    {
+        path: '/Components/addcontact',
+        element: <AddContact />
+    },
+    {
+        path: '/Components/apptheme',
+        element: <AppTheme />
+    },
+    {
+        path: '/Components/deliverycharges',
+        element: <DeliveryCharges />
+    },
+    {
+        path: '/Components/loginsettings',
+        element: <LoginSettings />
+    },
+    {
+        path: '/Components/walletdetail',
+        element: <WalletDetail />
+    },
+    {
+        path: '/Components/captionmaster',
+        element: <CaptionMaster />
+    },
+    {
+        path: '/Components/discountcouponlist',
+        element: <DiscountCouponList />
+    },
+    {
+        path: '/Components/minimumbillingsetting',
+        element: <MinimumBillingSetting />
+    },
+    {
+        path: '/Components/users',
+        element: <Users />
+    },
+    {
+        path: '/Components/Register',
+        element: <Register/>
+    },
+    {
+        path: '/Components/Customerl',
+        element: <CustomersL/>
+    },
+    {
+        path: '/components/AddCustomers',
+        element: <AddCustomer/>
+    },
+    {
+        path: '/Components/notification',
+        element: <Notifications/>
+    },
+    {
+        path: '/Components/customerlist',
+        element: <CustomerList />
     },
     {
         path: '/Components/refferalcoupan',

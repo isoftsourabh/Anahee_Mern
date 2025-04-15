@@ -9,7 +9,7 @@ const SectionTitleHome = ({ spaceTopClass, spaceBottomClass }) => {
           <h5>Who Are We</h5>
           <h1>Welcome To Anahee</h1>
           <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt labor et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commo consequat irure
+          At Anahee, we craft timeless styles that blend tradition with modern elegance. Rooted in Indian heritage and inspired by minimalism, our pieces celebrate modest fashion with a contemporary touch — effortless, graceful, and deeply soulful.
           </p>
         </div>
       </div>

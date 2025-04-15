@@ -32,6 +32,7 @@ import IconMenuPages from '../Icon/Menu/IconMenuPages';
 import IconMenuAuthentication from '../Icon/Menu/IconMenuAuthentication';
 import IconMenuDocumentation from '../Icon/Menu/IconMenuDocumentation';
 // import ExchangePolicy from '../../pages/Authentication/ExchangePolicy';
+import axios from 'axios';
 
 const Sidebar = () => {
     // const [currentMenu, setCurrentMenu] = useState<string>('');
@@ -43,7 +44,7 @@ const Sidebar = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    
+
     const [currentMenu, setCurrentMenu] = useState(null);
     const [basicSubMenuOpen, setBasicSubMenuOpen] = useState(false);
     const [userSubMenuOpen, setUserSubMenuOpen] = useState(false);
@@ -58,18 +59,20 @@ const Sidebar = () => {
     const [empSubMenuOpen, setEmpSubMenuOpen] = useState(false);
     const [pivotSubMenuOpen, setPivotSubMenuOpen] = useState(false);
     const [orderSubMenuOpen, setOrderSubMenuOpen] = useState(false);
-    const[innPurchaseSubMenuOpen, setInnPurchaseSubMenuOpen]= useState(false);
-    const[salesReportSubMenuOpen, setSalesReportSubMenuOpen]= useState(false);
-    const[purReturnSubMenuOpen, setPurReturnSubMenuOpen]= useState(false);
-    const[salesReturnSubMenuOpen, setSalesReturnSubMenuOpen]= useState(false);
-    const[bestInSubMenuOpen, setBestInSubMenuOpen]= useState(false);
-    const[comparisionSubMenuOpen, setComparisionSubMenuOpen]= useState(false);
-    const[deliverySubMenuOpen, setDeliverySubMenuOpen]= useState(false);
+    const [innPurchaseSubMenuOpen, setInnPurchaseSubMenuOpen] = useState(false);
+    const [salesReportSubMenuOpen, setSalesReportSubMenuOpen] = useState(false);
+    const [purReturnSubMenuOpen, setPurReturnSubMenuOpen] = useState(false);
+    const [salesReturnSubMenuOpen, setSalesReturnSubMenuOpen] = useState(false);
+    const [bestInSubMenuOpen, setBestInSubMenuOpen] = useState(false);
+    const [comparisionSubMenuOpen, setComparisionSubMenuOpen] = useState(false);
+    const [deliverySubMenuOpen, setDeliverySubMenuOpen] = useState(false);
 
-    const toggleMenu = (menu:any) => {
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+
+    const toggleMenu = (menu: any) => {
         if (menu === 'basic') {
             setBasicSubMenuOpen(!basicSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -82,13 +85,13 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        } 
+        }
         // else if (menu === 'advanced') {
         //     setUserSubMenuOpen(!userSubMenuOpen);
-        //     setBasicSubMenuOpen(false); 
+        //     setBasicSubMenuOpen(false);
         //     setPurchaseSubMenuOpen(false);
-        // } 
-        else if( menu === 'purchase'){
+        // }
+        else if (menu === 'purchase') {
             setPurchaseSubMenuOpen(!purchaseSubMenuOpen);
             setUserSubMenuOpen(false);
             setStockSubMenuOpen(false);
@@ -104,8 +107,7 @@ const Sidebar = () => {
             setInnPurchaseSubMenuOpen(false);
             setPurReturnSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'stock'){
+        } else if (menu === 'stock') {
             setStockSubMenuOpen(!stockSubMenuOpen);
             setBasicSubMenuOpen(false);
             setUserSubMenuOpen(false);
@@ -120,11 +122,10 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'sales'){
+        } else if (menu === 'sales') {
             setSalesSubMenuOpen(!salesSubMenuOpen);
             setBasicSubMenuOpen(false);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setChartsSubMenuOpen(false);
@@ -137,10 +138,9 @@ const Sidebar = () => {
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
             setSalesReportSubMenuOpen(false);
-        }
-        else if( menu === 'charts'){
+        } else if (menu === 'charts') {
             setChartsSubMenuOpen(!chartsSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -152,10 +152,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'account'){
+        } else if (menu === 'account') {
             setAccountSubMenuOpen(!accountSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -167,10 +166,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'stock_transfer'){
+        } else if (menu === 'stock_transfer') {
             setStransferSubMenuOpen(!stransferSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -182,10 +180,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'gst'){
+        } else if (menu === 'gst') {
             setGstSubMenuOpen(!gstSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -197,10 +194,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'gst_return'){
+        } else if (menu === 'gst_return') {
             setGstReturnSubMenuOpen(!gstReturnSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -212,10 +208,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'emp_sch'){
+        } else if (menu === 'emp_sch') {
             setEmpSubMenuOpen(!empSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -227,10 +222,9 @@ const Sidebar = () => {
             setPivotSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'pivot_rep'){
+        } else if (menu === 'pivot_rep') {
             setPivotSubMenuOpen(!pivotSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -242,10 +236,9 @@ const Sidebar = () => {
             setEmpSubMenuOpen(false);
             setOrderSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'order'){
+        } else if (menu === 'order') {
             setOrderSubMenuOpen(!orderSubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -256,35 +249,30 @@ const Sidebar = () => {
             setGstReturnSubMenuOpen(false);
             setEmpSubMenuOpen(false);
             setDeliverySubMenuOpen(false);
-        }
-        else if( menu === 'inn_purchase'){
+        } else if (menu === 'inn_purchase') {
             setInnPurchaseSubMenuOpen(!innPurchaseSubMenuOpen);
             setPurchaseSubMenuOpen(true);
             // setPurReturnSubMenuOpen{false};
             setPurReturnSubMenuOpen(false);
-        }
-        else if( menu === 'pur_return'){
+        } else if (menu === 'pur_return') {
             setPurReturnSubMenuOpen(!purReturnSubMenuOpen);
             setPurchaseSubMenuOpen(true);
             setInnPurchaseSubMenuOpen(false);
-        }
-        else if( menu === 'inn_sales'){
+        } else if (menu === 'inn_sales') {
             setSalesReportSubMenuOpen(!salesReportSubMenuOpen);
             setSalesSubMenuOpen(true);
             // setPurReturnSubMenuOpen{false};
             setPurReturnSubMenuOpen(false);
             setSalesReturnSubMenuOpen(false);
             setBestInSubMenuOpen(false);
-        }
-        else if( menu === 'sales_return'){
+        } else if (menu === 'sales_return') {
             setSalesReturnSubMenuOpen(!salesReturnSubMenuOpen);
             setSalesReportSubMenuOpen(false);
             setSalesSubMenuOpen(true);
             // setPurReturnSubMenuOpen{false};
             setPurReturnSubMenuOpen(false);
             setBestInSubMenuOpen(false);
-        }
-        else if( menu === 'best_in'){
+        } else if (menu === 'best_in') {
             setBestInSubMenuOpen(!bestInSubMenuOpen);
             setSalesReportSubMenuOpen(false);
             setSalesReturnSubMenuOpen(false);
@@ -292,8 +280,7 @@ const Sidebar = () => {
             // setPurReturnSubMenuOpen{false};
             setPurReturnSubMenuOpen(false);
             setComparisionSubMenuOpen(false);
-        }
-        else if( menu === 'comparision'){
+        } else if (menu === 'comparision') {
             setComparisionSubMenuOpen(!comparisionSubMenuOpen);
             setSalesReportSubMenuOpen(false);
             setSalesReturnSubMenuOpen(false);
@@ -301,10 +288,9 @@ const Sidebar = () => {
             setBestInSubMenuOpen(false);
             // setPurReturnSubMenuOpen{false};
             setPurReturnSubMenuOpen(false);
-        }
-        else if( menu === 'del_challan'){
+        } else if (menu === 'del_challan') {
             setDeliverySubMenuOpen(!deliverySubMenuOpen);
-            setUserSubMenuOpen(false); 
+            setUserSubMenuOpen(false);
             setPurchaseSubMenuOpen(false);
             setStockSubMenuOpen(false);
             setSalesSubMenuOpen(false);
@@ -315,29 +301,28 @@ const Sidebar = () => {
             setGstReturnSubMenuOpen(false);
             setEmpSubMenuOpen(false);
             setOrderSubMenuOpen(false);
+        } else {
+            setCurrentMenu(currentMenu === menu ? null : menu);
+            setUserSubMenuOpen(false);
+            setBasicSubMenuOpen(false);
+            setPurchaseSubMenuOpen(false);
+            setStockSubMenuOpen(false);
+            setSalesSubMenuOpen(false);
+            setChartsSubMenuOpen(false);
+            setAccountSubMenuOpen(false);
+            setStransferSubMenuOpen(false);
+            setGstSubMenuOpen(false);
+            setGstReturnSubMenuOpen(false);
+            setEmpSubMenuOpen(false);
+            setPivotSubMenuOpen(false);
+            setOrderSubMenuOpen(false);
+            setInnPurchaseSubMenuOpen(false);
+            setPurReturnSubMenuOpen(false);
+            setDeliverySubMenuOpen(false);
+            setSalesReportSubMenuOpen(false);
         }
-        else {
-                    setCurrentMenu(currentMenu === menu ? null : menu);
-                    setUserSubMenuOpen(false); 
-                    setBasicSubMenuOpen(false); 
-                    setPurchaseSubMenuOpen(false);
-                    setStockSubMenuOpen(false);
-                    setSalesSubMenuOpen(false);
-                    setChartsSubMenuOpen(false);
-                    setAccountSubMenuOpen(false)
-                    setStransferSubMenuOpen(false);
-                    setGstSubMenuOpen(false);
-                    setGstReturnSubMenuOpen(false);
-                    setEmpSubMenuOpen(false);
-                    setPivotSubMenuOpen(false);
-                    setOrderSubMenuOpen(false);
-                    setInnPurchaseSubMenuOpen(false);
-                    setPurReturnSubMenuOpen(false);
-                    setDeliverySubMenuOpen(false);
-                    setSalesReportSubMenuOpen(false);
-                }
     };
-   
+
     useEffect(() => {
         const storedBasicSubMenuState = localStorage.getItem('basicSubMenuOpen');
         const storedUserSubMenuState = localStorage.getItem('userSubMenuOpen');
@@ -385,32 +370,32 @@ const Sidebar = () => {
             setGstSubMenuOpen(storedsGstSubMenuState === 'true');
         }
         if (storedsGstReturnSubMenuState) {
-        setGstReturnSubMenuOpen(storedsGstReturnSubMenuState === 'true');
+            setGstReturnSubMenuOpen(storedsGstReturnSubMenuState === 'true');
         }
         if (storedsEmpSubMenuState) {
             setEmpSubMenuOpen(storedsEmpSubMenuState === 'true');
-            }
-            if (storedsPivotSubMenuState) {
-                setPivotSubMenuOpen(storedsPivotSubMenuState === 'true');
-                }
-                if (storedsinnPurchaseSubMenuState) {
-                    setInnPurchaseSubMenuOpen(storedsinnPurchaseSubMenuState === 'true');
-                    }
-                    if (storedsPurReturnSubMenuState) {
-                        setPurReturnSubMenuOpen(storedsPurReturnSubMenuState === 'true');
-                        }
-                        if (storedsSalesReportSubMenuState) {
-                            setSalesReportSubMenuOpen(storedsSalesReportSubMenuState === 'true');
-                            }
-                            if (storedsSalesReturnSubMenuState) {
-                                setSalesReturnSubMenuOpen(storedsSalesReturnSubMenuState === 'true');
-                                }
-                                if (storedsBestInSubMenuState) {
-                                    setBestInSubMenuOpen(storedsBestInSubMenuState === 'true');
-                                    }
-                                    if (storedsComparisionSubMenuState) {
-                                        setComparisionSubMenuOpen(storedsComparisionSubMenuState === 'true');
-                                        }
+        }
+        if (storedsPivotSubMenuState) {
+            setPivotSubMenuOpen(storedsPivotSubMenuState === 'true');
+        }
+        if (storedsinnPurchaseSubMenuState) {
+            setInnPurchaseSubMenuOpen(storedsinnPurchaseSubMenuState === 'true');
+        }
+        if (storedsPurReturnSubMenuState) {
+            setPurReturnSubMenuOpen(storedsPurReturnSubMenuState === 'true');
+        }
+        if (storedsSalesReportSubMenuState) {
+            setSalesReportSubMenuOpen(storedsSalesReportSubMenuState === 'true');
+        }
+        if (storedsSalesReturnSubMenuState) {
+            setSalesReturnSubMenuOpen(storedsSalesReturnSubMenuState === 'true');
+        }
+        if (storedsBestInSubMenuState) {
+            setBestInSubMenuOpen(storedsBestInSubMenuState === 'true');
+        }
+        if (storedsComparisionSubMenuState) {
+            setComparisionSubMenuOpen(storedsComparisionSubMenuState === 'true');
+        }
     }, []);
 
     useEffect(() => {
@@ -432,12 +417,31 @@ const Sidebar = () => {
         localStorage.setItem('bestInSubMenuOpen', bestInSubMenuOpen.toString());
         localStorage.setItem('comparisionSubMenuOpen', comparisionSubMenuOpen.toString());
         localStorage.setItem('salesReportSubMenuOpen', salesReportSubMenuOpen.toString());
-    }, [basicSubMenuOpen, userSubMenuOpen, purchaseSubMenuOpen, stockSubMenuOpen, salesSubMenuOpen,chartsSubMenuOpen, accountSubMenuOpen, stransferSubMenuOpen, gstSubMenuOpen, gstReturnSubMenuOpen,empSubMenuOpen, pivotSubMenuOpen, innPurchaseSubMenuOpen, purReturnSubMenuOpen,salesReportSubMenuOpen,salesReturnSubMenuOpen,bestInSubMenuOpen,comparisionSubMenuOpen]);
+    }, [
+        basicSubMenuOpen,
+        userSubMenuOpen,
+        purchaseSubMenuOpen,
+        stockSubMenuOpen,
+        salesSubMenuOpen,
+        chartsSubMenuOpen,
+        accountSubMenuOpen,
+        stransferSubMenuOpen,
+        gstSubMenuOpen,
+        gstReturnSubMenuOpen,
+        empSubMenuOpen,
+        pivotSubMenuOpen,
+        innPurchaseSubMenuOpen,
+        purReturnSubMenuOpen,
+        salesReportSubMenuOpen,
+        salesReturnSubMenuOpen,
+        bestInSubMenuOpen,
+        comparisionSubMenuOpen,
+    ]);
     // useEffect(() => {
     //     setBasicSubMenuOpen(false);
     //     setUserSubMenuOpen(false);
     // }, []);
-    
+
     useEffect(() => {
         const selector = document.querySelector('.sidebar ul a[href="' + window.location.pathname + '"]');
         if (selector) {
@@ -464,9 +468,32 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const handleLogout = () => {
         // Perform logout actions here (e.g., clearing authentication token, resetting state)
-       // Then redirect to login page
-       navigate('/', { replace: true }); // Use replace option to prevent going back
-   };
+        // Then redirect to login page
+        navigate('/', { replace: true }); // Use replace option to prevent going back
+    };
+
+    interface MenuItem {
+        FormName: string;
+    }
+
+    useEffect(() => {
+        const fetchMenuItems = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/getrfmaster');
+                const data = await response.json();
+                if (data.message === 'Data retrieved successfully') {
+                    setMenuItems(data.data);
+                } else {
+                    console.log('No data found');
+                }
+            } catch (error) {
+                console.error('Error fetching menu items:', error);
+            }
+        };
+
+        fetchMenuItems();
+    }, []);
+    ``;
 
     return (
         <div className={semidark ? 'dark' : ''}>
@@ -996,6 +1023,20 @@ const Sidebar = () => {
                                                                     <NavLink to="/datatables/frmCodeType?category=brand">Brand</NavLink>
                                                                 </li>
                                                                 <li>
+                                                                    <NavLink to="/datatables/frmCodeType?category=formName">FromName</NavLink>
+                                                                </li>
+                                                                <li>
+                                                                    <NavLink to="/datatables/frmCodeType?category=control">Control</NavLink>
+                                                                </li><li>
+                                                                    <NavLink to="/datatables/frmCodeType?category=c_name">C_Name</NavLink>
+                                                                </li>
+                                                                <li>
+                                                                    <NavLink to="/datatables/frmCodeType?category=c_type">C_Type</NavLink>
+                                                                </li>
+                                                                <li>
+                                                                    <NavLink to="/datatables/frmCodeType?category=c_value">C_Value</NavLink>
+                                                                </li>
+                                                                <li>
                                                                     <NavLink to="/datatables/frmCodeType?category=product">Product</NavLink>
                                                                 </li>
                                                                 <li>
@@ -1210,7 +1251,7 @@ const Sidebar = () => {
                                                 </div>
                                             </button>
 
-                                            <AnimateHeight duration={300} height={stockSubMenuOpen ? 'auto' : 0}>
+                                            {/* <AnimateHeight duration={300} height={stockSubMenuOpen ? 'auto' : 0}>
                                                 <ul className="sub-menu text-gray-500">
                                                     <li>
                                                         <NavLink to="/stockTables/stockDetail">Stock Detail</NavLink>
@@ -1236,6 +1277,16 @@ const Sidebar = () => {
                                                     <li>
                                                         <NavLink to="/stockTables/stockSummary">Stock Summary Item Name Wise</NavLink>
                                                     </li>
+                                                </ul>
+                                            </AnimateHeight> */}
+
+                                            <AnimateHeight duration={300} height={stockSubMenuOpen ? 'auto' : 0}>
+                                                <ul className="sub-menu text-gray-500">
+                                                    {menuItems.map((item, index) => (
+                                                        <li key={index}>
+                                                            <NavLink to={`/stockTables/${item.FormName.toLowerCase().replace(/\s+/g, '')}`}>{item.FormName}</NavLink>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </AnimateHeight>
                                         </li>
@@ -1805,11 +1856,43 @@ const Sidebar = () => {
                                     </div>
                                 </NavLink>
                             </li> */}
+
+
                             <li className="menu nav-item">
-                                <NavLink to="/Components/HideSeek" className="group">
+                                <button type="button" className={`${currentMenu === 'Pro' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('Pro')}>
+                                    <div className="flex items-center">
+                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Profile And Legal')}</span>
+                                    </div>
+
+                                    <div className={currentMenu !== 'Pro' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                        <IconCaretDown />
+                                    </div>
+                                </button>
+                                <AnimateHeight duration={300} height={currentMenu === 'Pro' ? 'auto' : 0}>
+                                    <ul className="sub-menu text-gray-500">
+                                        {/* <li>
+                                            <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
+                                        </li> */}
+                                        <li>
+                                            <NavLink to="/Components/promotionbanners">Promotion Banner</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/addcontact">Add Contact</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/refferalcoupan">Contact Us</NavLink>
+                                        </li>
+                                    </ul>
+                                </AnimateHeight>
+                            </li>
+                                
+
+                            <li className="menu nav-item">
+                                <NavLink to="/Components/layoutsetting" className="group">
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
-                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Hide & Seek')}</span>
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Layout Setting')}</span>
                                     </div>
                                 </NavLink>
                             </li>
@@ -1817,7 +1900,7 @@ const Sidebar = () => {
                                 <NavLink to="/Components/image-update" className="group">
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
-                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Image_Update')}</span>
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Image Update')}</span>
                                     </div>
                                 </NavLink>
                             </li>
@@ -1834,6 +1917,41 @@ const Sidebar = () => {
                                     <div className="flex items-center">
                                         <IconMenuTables className="group-hover:!text-primary shrink-0" />
                                         <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Remote From Master')}</span>
+                                    </div>
+                                </NavLink>
+                            </li>
+                            <li className="menu nav-item">
+                                <NavLink to="/Components/mastersetting" className="group">
+                                    <div className="flex items-center">
+                                        <IconMenuTables className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Master Setting')}</span>
+                                    </div>
+                                </NavLink>
+                            </li>
+                            <li className="menu nav-item">
+                                <NavLink to="/Components/formmaster" className="group">
+                                    <div className="flex items-center">
+                                        <IconMenuTables className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Admin Settings')}</span>
+                                    </div>
+                                </NavLink>
+                            </li>
+
+
+                            <li className="menu nav-item">
+                                <NavLink to="/components/notification" className="group">
+                                    <div className="flex items-center">
+                                        <IconMenuTables className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Notification')}</span>
+                                    </div>
+                                </NavLink>
+                            </li>
+
+                            <li className="menu nav-item">
+                                <NavLink to="/Components/reportfromstock" className="group">
+                                    <div className="flex items-center">
+                                        <IconMenuTables className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Report From Stock')}</span>
                                     </div>
                                 </NavLink>
                             </li>
@@ -1896,6 +2014,38 @@ const Sidebar = () => {
                             </li> */}
 
 
+        <li className="menu nav-item">
+                                <button type="button" className={`${currentMenu === 'master' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('master')}>
+                                    <div className="flex items-center">
+                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Master')}</span>
+                                    </div>
+
+                                    <div className={currentMenu !== 'master' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                        <IconCaretDown />
+                                    </div>
+                                </button>
+                                <AnimateHeight duration={300} height={currentMenu === 'master' ? 'auto' : 0}>
+                                    <ul className="sub-menu text-gray-500">
+                                        {/* <li>
+                                            <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
+                                        </li> */}
+                                        <li>
+                                            <NavLink to="/Components/minimumbillingsetting">Minimum Billing Setting</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/users">Users</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/Customerl">Customer</NavLink>
+                                        </li>
+
+
+                                    </ul>
+                                </AnimateHeight>
+                            </li>
+
+
                             <li className="menu nav-item">
                                 <button type="button" className={`${currentMenu === 'dash' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('dash')}>
                                     <div className="flex items-center">
@@ -1912,29 +2062,50 @@ const Sidebar = () => {
                                         {/* <li>
                                             <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
                                         </li> */}
-                                       <li>
-                                                                    <NavLink to="/components/exchange-policy">Exchange Policy</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/components/terms-conditions">Terms And Conditions</NavLink>
-                                                                </li>
-                                                    
-                                                                <li>
-                                                                    <NavLink to="/components/exchange-process">Exchange Process</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/components/cancellation-policy">Cancellation Policy</NavLink>
-                                                                </li>
-                                                                 <li>
-                                                                    <NavLink to="/components/refund-policy">Refund Policy</NavLink>
-                                                                </li>
-                                                                 <li>
-                                                                    <NavLink to="/components/shipping-locations">Shipping Locations</NavLink>
-                                                                </li> 
-                                                                <li>
-                                                                    <NavLink to="/components/terms-service">Terms Of Service</NavLink>
-                                                                </li>
-  
+                                        <li>
+                                            <NavLink to="/components/exchange-policy">Exchange Policy</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/terms-conditions">Terms And Conditions</NavLink>
+                                        </li>
+
+                                        <li>
+                                            <NavLink to="/components/exchange-process">Exchange Process</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/cancellation-policy">Cancellation Policy</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/refund-policy">Refund Policy</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/shipping-locations">Shipping Locations</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/terms-service">Terms Of Service</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/apptheme">App Theme</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/deliverycharges">Delivery Charges</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/loginsettings">Login Settings</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/walletdetail">Wallet Details</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/captionmaster">Caption Master</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/discountcouponlist">Discount Coupon</NavLink>
+                                        </li>
+
+
+
+
                                         {/* <li className="menu nav-item">
                                             
                                             <AnimateHeight duration={300} height={errorSubMenu ? 'auto' : 0}>
@@ -1960,8 +2131,6 @@ const Sidebar = () => {
                                         </li> */}
                                     </ul>
                                 </AnimateHeight>
-
-                               
                             </li>
 
                             <li className="menu nav-item">
@@ -1980,13 +2149,13 @@ const Sidebar = () => {
                                         {/* <li>
                                             <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
                                         </li> */}
-                                       <li>
-                                                                    <NavLink to="/components/discountcoupon">Discount Coupon</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/components/refferalcoupan">Refferal Coupon</NavLink>
-                                                                </li>
-  
+                                        <li>
+                                            <NavLink to="/components/discountcoupon">Discount Coupon</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/components/refferalcoupan">Refferal Coupon</NavLink>
+                                        </li>
+
                                         {/* <li className="menu nav-item">
                                             
                                             <AnimateHeight duration={300} height={errorSubMenu ? 'auto' : 0}>
@@ -2012,9 +2181,9 @@ const Sidebar = () => {
                                         </li> */}
                                     </ul>
                                 </AnimateHeight>
-
-                               
                             </li>
+
+                            
 
                             <li className="menu nav-item">
                                 <button type="button" className={`${currentMenu === 'or' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('or')}>
@@ -2032,27 +2201,91 @@ const Sidebar = () => {
                                         {/* <li>
                                             <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
                                         </li> */}
-                                                                <li>
-                                                                    <NavLink to="/Components/orderlist">List</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/Components/orderpreview">Preview</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/Components/orderadd">Add</NavLink>
-                                                                </li>
-                                                                <li>
-                                                                    <NavLink to="/Components/orderedit">Edit</NavLink>
-                                                                </li>
-  
-                                       
+                                        <li>
+                                            <NavLink to="/Components/orderlist">List</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/orderpreview">Preview</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/orderadd">Add</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/orderedit">Edit</NavLink>
+                                        </li>
                                     </ul>
                                 </AnimateHeight>
-
-                               
                             </li>
 
-                           
+
+                            <li className="menu nav-item">
+                                <button type="button" className={`${currentMenu === 'Man' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('Man')}>
+                                    <div className="flex items-center">
+                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('Management')}</span>
+                                    </div>
+
+                                    <div className={currentMenu !== 'Man' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                        <IconCaretDown />
+                                    </div>
+                                </button>
+                                <AnimateHeight duration={300} height={currentMenu === 'Man' ? 'auto' : 0}>
+                                    <ul className="sub-menu text-gray-500">
+                                        {/* <li>
+                                            <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
+                                        </li> */}
+                                        <li>
+                                            <NavLink to="/Components/storemaster">Store Master</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/appversion">App Version</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/smssetting">SMS Setting</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/paymentsetting">Payment Setting</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/notificationkey">Notification Key</NavLink>
+                                        </li>
+
+
+                                    </ul>
+                                </AnimateHeight>
+                            </li>
+
+
+
+                            <li className="menu nav-item">
+                                <button type="button" className={`${currentMenu === 'app' ? 'active' : ''} nav-link group w-full`} onClick={() => toggleMenu('app')}>
+                                    <div className="flex items-center">
+                                        <IconMenuPages className="group-hover:!text-primary shrink-0" />
+                                        <span className="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">{t('App Report')}</span>
+                                    </div>
+
+                                    <div className={currentMenu !== 'app' ? 'rtl:rotate-90 -rotate-90' : ''}>
+                                        <IconCaretDown />
+                                    </div>
+                                </button>
+                                <AnimateHeight duration={300} height={currentMenu === 'app' ? 'auto' : 0}>
+                                    <ul className="sub-menu text-gray-500">
+                                        {/* <li>
+                                            <NavLink to="/pages/knowledge-base">{t('knowledge_base')}</NavLink>
+                                        </li> */}
+                                        <li>
+                                            <NavLink to="/Components/report">Report</NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/Components/productwisereport">Product Wise Report</NavLink>
+                                        </li>
+
+
+                                    </ul>
+                                </AnimateHeight>
+                            </li>
+
+
 
                             <h2 className="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1">
                                 <IconMinus className="w-4 h-5 flex-none hidden" />

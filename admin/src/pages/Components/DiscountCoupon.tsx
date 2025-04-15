@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DiscountCoupan: React.FC = () => {
+    const navigate = useNavigate();
   const [status, setStatus] = useState(false);
   const [isPercentage, setIsPercentage] = useState(false);
 
@@ -8,7 +10,9 @@ const DiscountCoupan: React.FC = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-semibold mb-4">Discount Coupon</h2>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md mb-4">
+        <button 
+          onClick={() => navigate("/Components/discountcouponlist")}
+         className="bg-blue-600 text-white px-4 py-2 rounded-md mb-4">
           Discount Coupon List
         </button>
 

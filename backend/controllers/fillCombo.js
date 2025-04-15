@@ -177,7 +177,6 @@ exports.getcmbAW = (req, res) => {
 };
 
 
-
 exports.postcsbAW = (req, res) => {
     const { TblName, FldName, FldCode, OrdBy, WhFldName } = req.body;
     console.log(req.body);
