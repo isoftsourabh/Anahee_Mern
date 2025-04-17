@@ -76,6 +76,8 @@ router.put("/editUser/:id",users.editUser);
 
 router.post("/add_customer",customer.addcustomer);
 router.post("/login_customer",customer.logincustomer);
+router.get("/getcustomerbyid/:customerId",customer.getcustomerbyid);
+router.put("/updateCustomerInfo",customer.updateCustomerInfo);
 router.get("/getAllcustomer",customer.getAll);
 // router.delete("/deletecustomer/:id",customer.deletecustomer);
 // router.put("/editcustomer/:id",customer.editcustomer);

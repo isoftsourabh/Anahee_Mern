@@ -6,6 +6,7 @@ import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { BASE_URL } from "../../config";
+import { useNavigate } from 'react-router-dom';
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -16,7 +17,7 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,15 +33,21 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await response.json();
 
       if (response.ok) {
+
+        localStorage.setItem("customerinfo", JSON.stringify(data.customer));
+
         setSuccess("Login successful!");
         setFormData({ email: "", password: "" });
+        navigate("/");
       } else {
         setError(data.msg || "Login failed");
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("Something went wrong. Please try again.");
     }
   };

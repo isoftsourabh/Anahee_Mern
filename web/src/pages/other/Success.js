@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
@@ -9,34 +9,50 @@ const Success = () => {
   let cartTotalPrice = 0;
   const currency = useSelector((state) => state.currency);
 
-  const [pickupPincode, setPickupPincode] = useState("");
-  const [deliveryPincode, setDeliveryPincode] = useState("");
+  const [pickupPincode, setPickupPincode] = useState("110001");
+  const [deliveryPincode, setDeliveryPincode] = useState("400001");
   const [weight, setWeight] = useState(0.5);
-  const [cod, setCod] = useState(0);
+  const [cod, setCod] = useState(1);
   const [couriers, setCouriers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [recommendedCourier, setRecommendedCourier] = useState(null);
+
+  useEffect(() => {
+    checkServiceability();
+  }, []);
+
 
   const checkServiceability = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const token = "your_shiprocket_token_here"; // Replace with your actual token
-
-      axios
-        .get(
-          "https://apiv2.shiprocket.in/v1/external/courier/serviceability/",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          setCouriers(response.data.data.available_courier_companies);
-        })
-        .catch((error) => {
-          console.error("Error:", error.response?.data || error.message);
-        });
+      const serviceabilityResponse = await axios.post(
+        `${BASE_URL}/api/shiprocket/checkServiceability`,
+        {
+          pickup_postcode: pickupPincode,
+          delivery_postcode: deliveryPincode,
+          cod: cod,
+          weight: weight
+        }
+      );
+      
+      if (serviceabilityResponse.data.success) {
+        const availableCouriers = serviceabilityResponse.data.data.data.available_courier_companies;
+        setCouriers(availableCouriers);
+        
+        // Find the recommended courier
+        const recommendedId = serviceabilityResponse.data.data.data.recommended_courier_company_id;
+        const recommended = availableCouriers.find(c => c.courier_company_id === recommendedId);
+        setRecommendedCourier(recommended);
+      } else {
+        setError("No couriers available for this pincode combination");
+      }
     } catch (error) {
-      alert("Failed to check serviceability.");
+      console.error("Error:", error.response?.data || error.message);
+      setError("Failed to check serviceability. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +70,12 @@ const Success = () => {
     }
   };
 
+  // Format date to show day name
+  const formatDeliveryDate = (dateString) => {
+    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
   return (
     <Fragment>
       <SEO
@@ -65,65 +87,82 @@ const Success = () => {
           <div className="container">
             <div className="row mb-5">
               <div className="col-lg-12">
-                <h3>Check Courier Serviceability</h3>
-                <div className="d-flex flex-wrap gap-2 mb-3">
-                  <input
-                    type="text"
-                    placeholder="Pickup Pincode"
-                    value={pickupPincode}
-                    onChange={(e) => setPickupPincode(e.target.value)}
-                    className="form-control w-25"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Delivery Pincode"
-                    value={deliveryPincode}
-                    onChange={(e) => setDeliveryPincode(e.target.value)}
-                    className="form-control w-25"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Weight (kg)"
-                    value={weight}
-                    onChange={(e) => setWeight(parseFloat(e.target.value))}
-                    className="form-control w-25"
-                  />
-                  <select
-                    value={cod}
-                    onChange={(e) => setCod(Number(e.target.value))}
-                    className="form-control w-25"
-                  >
-                    <option value={0}>Prepaid</option>
-                    <option value={1}>COD</option>
-                  </select>
-                  <button
-                    onClick={checkServiceability}
-                    className="btn btn-info"
-                  >
-                    Check
-                  </button>
-                </div>
-
-                <div>
-                  {couriers.length > 0 && (
-                    <div>
-                      <h5>Available Couriers:</h5>
-                      {couriers.map((courier, idx) => (
-                        <div key={idx} className="border p-3 mb-2">
-                          <strong>{courier.courier_name}</strong>
-                          <p>
-                            Estimated Delivery Days:{" "}
-                            {courier.estimated_delivery_days}
-                          </p>
-                          <p>Freight Charge: ₹{courier.freight_charge}</p>
-                          <p>COD Available: {courier.cod ? "Yes" : "No"}</p>
-                          <p>Tracking: {courier.realtime_tracking}</p>
-                          <p>Rating: {courier.rating}</p>
-                        </div>
-                      ))}
+                {error && (
+                  <div className="alert alert-danger mt-3">
+                    {error}
+                  </div>
+                )}
+                {couriers.length > 0 && (
+                  <div className="card">
+                    <div className="card-header">
+                      <h5 className="mb-0">All Available Shipping Options</h5>
                     </div>
-                  )}
-                </div>
+                    <div className="card-body p-0">
+                      <div className="table-responsive">
+                        <table className="table table-hover mb-0">
+                          <thead className="table-light">
+                            <tr>
+                              <th>Courier</th>
+                              <th>Type</th>
+                              <th>Delivery Date</th>
+                              <th>Shipping</th>
+                              <th>COD</th>
+                              <th>Total</th>
+                              <th>Features</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {couriers.map((courier, idx) => (
+                              <tr 
+                                key={idx} 
+                                className={courier.courier_company_id === recommendedCourier?.courier_company_id ? 'table-success' : ''}
+                              >
+                                <td>
+                                  {courier.courier_name}
+                                  {courier.courier_company_id === recommendedCourier?.courier_company_id && (
+                                    <span className="badge bg-success ms-2">Recommended</span>
+                                  )}
+                                </td>
+                                <td>{courier.mode === 1 ? 'Air' : 'Surface'}</td>
+                                <td>
+                                  {formatDeliveryDate(courier.etd)}<br />
+                                  <small>({courier.estimated_delivery_days} days)</small>
+                                </td>
+                                <td>₹{courier.freight_charge.toFixed(2)}</td>
+                                <td>
+                                  {courier.cod === 1 ? (
+                                    `₹${courier.cod_charges.toFixed(2)}`
+                                  ) : (
+                                    'N/A'
+                                  )}
+                                </td>
+                                <td>
+                                  <strong>₹{courier.rate.toFixed(2)}</strong>
+                                </td>
+                                <td>
+                                  <div className="d-flex flex-wrap gap-1">
+                                    {courier.realtime_tracking === 'Real Time' && (
+                                      <span className="badge bg-info">Tracking</span>
+                                    )}
+                                    {courier.call_before_delivery === 'Available' && (
+                                      <span className="badge bg-primary">Call Before Delivery</span>
+                                    )}
+                                    {courier.pod_available === 'Instant' && (
+                                      <span className="badge bg-warning text-dark">POD Available</span>
+                                    )}
+                                    {courier.cod === 1 && (
+                                      <span className="badge bg-danger">COD</span>
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

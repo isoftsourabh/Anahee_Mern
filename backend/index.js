@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 require('dotenv').config();
 const userRoutes = require("./routes/userRoute");
+const apiRoutes = require("./routes/apiRoute");
 require("./config")
 const path = require("path");
 app.use(express.json())
@@ -34,7 +35,7 @@ app.use("/api/user", userRoutes);
 app.use("itemimage",express.static(path.join(__dirname, "public/images/banner")));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images/banner', express.static(path.join(__dirname, 'public/images/banner')));
-
+app.use("/api/shiprocket", apiRoutes);
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use("/itemMaster", express.static(path.join(__dirname, "uploads"))); // Serve images
 

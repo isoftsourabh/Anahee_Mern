@@ -3,7 +3,7 @@ const axios = require("axios");
 // Store the token at module level
 let shiprocketToken = null;
 
-exports.authenticateShiprocket = async () => {
+exports.authenticateShiprocket = async () => { console.log(32323230);
   try {
     const response = await axios.post(
       "https://apiv2.shiprocket.in/v1/external/auth/login",
@@ -14,6 +14,7 @@ exports.authenticateShiprocket = async () => {
     );
 
     shiprocketToken = response.data.token;
+    console.log('shiprocketToken',shiprocketToken);
     return shiprocketToken;
   } catch (error) {
     console.error(
@@ -125,37 +126,17 @@ exports.createPickup = async (req, res) => {
 };
 
 
-
-
-// Replace with your actual Shiprocket credentials
-const SHIPROCKET_EMAIL = "isoftzonelakhan@gmail.com";
-const SHIPROCKET_PASSWORD = "Isoft@1209";
-
-// Cache token
-
-// Login and get token
-async function getShiprocketToken() {
-  if (shiprocketToken) return shiprocketToken;
-
-  const response = await axios.post("https://apiv2.shiprocket.in/v1/external/auth/login", {
-    email: SHIPROCKET_EMAIL,
-    password: SHIPROCKET_PASSWORD
-  });
-
-  shiprocketToken = response.data.token;
-  return shiprocketToken;
-}
-
-// Express route
 exports.checkServiceability = async (req, res) => {
   try {
-    const { pickup_postcode, delivery_postcode, cod, weight } = req.query;
-
-    const token = await getShiprocketToken();
+    const { pickup_postcode, delivery_postcode, cod, weight } = req.body;
+console.log("req body", req.body);
+    if (!shiprocketToken) {
+      await exports.authenticateShiprocket();
+    }
 
     const response = await axios.get("https://apiv2.shiprocket.in/v1/external/courier/serviceability/", {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${shiprocketToken}`
       },
       params: {
         pickup_postcode,

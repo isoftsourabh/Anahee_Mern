@@ -6,6 +6,8 @@ import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { BASE_URL } from "../../config";
+import { useNavigate } from 'react-router-dom';
+
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -19,42 +21,51 @@ const Register = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
+  
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
-
+  
     try {
       const response = await fetch(`${BASE_URL}/add_customer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      
-        
       });
-      console.log(response);
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setSuccess("Registration successful!");
-        setFormData({ name: "", email: "", mobile: "", password: "", confirmPassword: "" });
+        setFormData({
+          name: "",
+          email: "",
+          mobile: "",
+          password: "",
+          confirmPassword: ""
+        });
+        navigate("/login-register");
       } else {
-        setError(data.msg || "Registration failed");
+        // Show backend error message if available
+        const errorMsg = data?.msg || "Registration failed";
+        setError(errorMsg);
       }
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      console.error("Network error:", err);
+      setError("Something went wrong. Please check your connection and try again.");
     }
-  };
+  };  
 
   return (
     <>

@@ -5,7 +5,7 @@ const HeroSliderFourteenSingle = ({ data }) => {
   return (  
     <div  
       className="slider-height-5 d-flex align-items-center bg-img"  
-      style={{ backgroundImage: `url(${process.env.PUBLIC_URL + data.image})` }}  
+      style={{ backgroundImage: `url(${data.images})` }}  
     >  
       <div className="container">  
         <div className="row">  
