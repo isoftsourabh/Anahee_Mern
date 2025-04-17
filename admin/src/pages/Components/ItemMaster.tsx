@@ -54,6 +54,7 @@ const ItemMaster: React.FC = () => {
         addExp: '',
         // PHOTO: [],
         // images: [],
+        DESCRIPTION: '',
     });
 
     interface Record {
@@ -183,6 +184,7 @@ const ItemMaster: React.FC = () => {
             ExpiryDays: '',
             LookUp: '',
             Remark: '',
+            Description:'',
             // image: null,
             addExp: '',
             // images: [],
@@ -243,6 +245,7 @@ const ItemMaster: React.FC = () => {
             Unit: item.Unit,
             Section: item.Section,
             Status: item.Status,
+            DESCRIPTION: item.Description,
             // image: item.image instanceof File ? item.image : null,
             // PHOTO: item.PHOTO instanceof File ? item.PHOTO : null,
 
@@ -308,7 +311,7 @@ const ItemMaster: React.FC = () => {
 
 
     const handleUpdateItem = async (id: number) => {
-        console.log('Updating Item ID:', id);
+        console.log('Updating Item ID___:', id);
         if (!id) {
             alert('Invalid item ID');
             return;
@@ -349,6 +352,7 @@ const ItemMaster: React.FC = () => {
             UNIT: item.UNIT,
             SECTION: item.SECTION,
             STATUS: item.STATUS,
+            DESCRIPTION:item.DESCRIPTION,
             image: item.image instanceof File ? item.image : null,
         };
 
@@ -403,57 +407,7 @@ const ItemMaster: React.FC = () => {
         const { name, value } = e.target;
         setItem((prev) => ({ ...prev, [name]: value }));
     };
-
-    
-
-    // const handleEditItem = async (id: number) => {
-    //     setEditId(id);
-
-    //     try {
-    //         const response = await axios.get(`${BASE_URL}/items/${id}`, {
-    //             headers: { 'Content-Type': 'application/json' },
-    //             withCredentials: true,
-    //         });
-    //         setItem(response.data.item);
-    //     } catch (error) {
-    //         console.error('Error fetching item data:', error);
-    //         alert('An error occurred while fetching the item data.');
-    //     }
-    // };
-
-    // const handleEditItem = async (id: number) => {
-    //     console.log("Editing item with ID:", id); // Log the ID for debugging
-    //     setEditId(id);
-    //     // setBarcode(Barcode);
-    //     // setItemName(ItemName);
-    //     // setBoxSize(BoxSize);
-    //     // setHSNCode(HSNCode);
-    //     // setRate(Rate);
-    //     // setTax(Tax);
-    //     // setPurPrice(PurPrice);
-    //     // setMarkUp(MarkUp);
-    //     // setMRP(MRP);
-    //     // setMarkDown(MarkDown);
-    //     // setSalePrice(SalePrice);
-    //     // setExpiryDays(ExpiryDays);
-    //     try {
-    //         const response = await axios.get(`${BASE_URL}/items/${id}`, {
-    //             headers: { 'Content-Type': 'application/json' },
-    //             withCredentials: true,
-    //         });
-
-    //         if (response.data.item && response.data.item.length > 0) {
-    //             setItem(response.data.items[0]);
-    //         } else {
-    //             console.error('Item data is undefined or missing:', response.data);
-    //             alert('Item data is missing or undefined.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching item data:', error);
-    //         alert('An error occurred while fetching the item data.');
-    //     }
-    // };
-
+  
     const handleEditItem = async (id: number) => {
         console.log('Editing Item ID:', id);
         setEditId(id); // Set the editId state
@@ -476,54 +430,6 @@ const ItemMaster: React.FC = () => {
             alert('An error occurred while fetching the item data.');
         }
     };
-
-    
-
-    // const handleEditItem = async (id: number) => {
-    //     try {
-    //         const response = await axios.get(`${BASE_URL}/items/${id}`, {
-    //             headers: { 'Content-Type': 'application/json' },
-    //             withCredentials: true,
-    //         });
-
-    //         if (response.data && response.data.item) {
-    //             setItem(response.data.item);
-    //             setIsEditing(true); // Enable edit mode
-    //         } else {
-    //             console.error('Item data is undefined or missing:', response.data);
-    //             alert('Item data is missing or undefined.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching item data:', error);
-    //         alert('An error occurred while fetching the item data.');
-    //     }
-    // };
-
-    // const handleEditItem = async (id: number) => {
-    //     setEditId(id);
-    //     const data = {
-    //         ItemId: item.ItemId,
-    //             }
-    //             console.log(data);
-    //     try {
-
-    //         const response = await axios.get(`${BASE_URL}/items/${id}`, {
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 withCredentials: true,
-    //             });
-
-    //         if ( response.data.item) {
-    //             setItem(response.data.item);
-    //             console.log('Item data fetched:',response.data);
-    //         } else {
-    //             console.error('Item data is undefined or missing:', response.data);
-    //             alert('Item data is missing or undefined.');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching item data:', error);
-    //         alert('An error occurred while fetching the item data.');
-    //     }
-    // };
 
     const handleImageChange = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
         console.log('Image List before update:', images);
@@ -555,6 +461,7 @@ const ItemMaster: React.FC = () => {
     const fetchImagesFromAPI = async () => {
         const formData = new FormData();
         formData.append('ItemId', item.ItemId);
+            console.log(item);
         images.forEach((image) => {
             formData.append("photo", image.file);
         });
@@ -584,7 +491,7 @@ const ItemMaster: React.FC = () => {
             <h2 className="text-2xl font-semibold mb-4 text-center">Item Master</h2>
             <Tab.Group>
                 <Tab.List className="mt-3 flex flex-wrap border-b border-gray-300">
-                    {['Additional Details', 'Description', 'Product Images'].map((tab) => (
+                    {['Additional Details', 'Descriptions', 'Product Images'].map((tab) => (
                         <Tab as={Fragment} key={tab}>
                             {({ selected }) => <button className={`${selected ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-600'} px-4 py-2 focus:outline-none`}>{tab}</button>}
                         </Tab>
@@ -594,7 +501,7 @@ const ItemMaster: React.FC = () => {
                 <Tab.Panels>
                     <Tab.Panel>
                         <div className="grid grid-cols-4 gap-4 p-4 border rounded">
-                            {['Barcode', 'ItemId', 'ItemName', 'BoxSize', 'HSNCode', 'Rate', 'Tax', 'PurPrice', 'MarkUp', 'MRP', 'MarkDown', 'SalePrice', 'ExpiryDays'].map((field) => (
+                            {['Barcode', 'ItemId', 'ItemName', 'BoxSize', 'HSNCode', 'Rate', 'Tax', 'PurPrice', 'MarkUp', 'MRP', 'MarkDown', 'SalePrice', 'ExpiryDays','DESCRIPTION'].map((field) => (
                                 <div key={field}>
                                     <label className="block font-medium">{field}</label>
                                     <input type="text" name={field} value={item[field] as string} onChange={handleChange} className="w-full p-2 border rounded" />
@@ -705,7 +612,7 @@ const ItemMaster: React.FC = () => {
                                 <button
                                     type="button"
                                     className="px-4 py-2 bg-blue-500 text-white rounded"
-                                    onClick={() => handleUpdateItem(editId ?? 0)} // Ensure item.id is set>
+                                    onClick={() => handleUpdateItem(Number(item.ItemId))} // Ensure item.id is set>
                                 >
                                     Update
                                 </button>

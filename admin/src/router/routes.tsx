@@ -43,6 +43,9 @@ import Notifications from '../pages/Components/Notifications';
 // import CustomersL from '../pages/Components/CustomersL';
 import AddCustomer from '../pages/Components/AddCustomer';
 import CustomersL from '../pages/Components/CustomerL';
+import SocialMediaSettingsPage from '../pages/Components/SocialMediaSettingsPage';
+import AboutUs from '../pages/Components/AboutUs';
+import ContactUs from '../pages/Components/ContactUs';
 
 // import ExchangePolicy from /ExchangePolicy';
 const Index = lazy(() => import('../pages/Index'));
@@ -462,6 +465,18 @@ const routes = [
     {
         path: '/Components/customerlist',
         element: <CustomerList />
+    },
+    {
+        path: '/Components/socialmediasettingspage',
+        element: <SocialMediaSettingsPage />
+    },
+    {
+        path: '/Components/aboutus',
+        element: <AboutUs />
+    },
+    {
+        path: '/Components/contactus',
+        element: <ContactUs />
     },
     {
         path: '/Components/refferalcoupan',

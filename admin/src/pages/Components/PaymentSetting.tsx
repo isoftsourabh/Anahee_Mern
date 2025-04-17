@@ -35,7 +35,7 @@ const PaymentSetting = () => {
   };
 
   const handleBackClick = () => {
-    navigate("/payment-settings");
+    navigate("/Components/paymentsetting");
   };
 
   return (
