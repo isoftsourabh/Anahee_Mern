@@ -10,22 +10,145 @@ const con = require('../config')
      });
  };
 
+ exports.updateCustomerInfo = (req, res) => {
+  const {
+    FNAME,
+    LNAME,
+    email,
+    customerId,
+    MOBILE,
+    CADDRESSLINE1,
+    CCITY,
+    CSTATE,
+    CCOUNTRY,
+    CDISTRICT,
+    CPINCODE,
+    password
+  } = req.body;
 
 
+  if (!customerId) {
+    return res.status(400).json({ error: 'Customer ID is missing' });
+  }
 
+  // Build query
+  const fields = [
+    'FNAME = ?',
+    'LNAME = ?',
+    'email = ?',
+    'MOBILE = ?',
+    'CADDRESSLINE1 = ?',
+    'CCITY = ?',
+    'CSTATE = ?',
+    'CCOUNTRY = ?',
+    'CDISTRICT = ?',
+    'CPINCODE = ?'
+  ];
+  const values = [FNAME, LNAME, email, MOBILE, CADDRESSLINE1, CCITY, CSTATE, CCOUNTRY, CDISTRICT, CPINCODE];
 
-exports.addcustomer = async (req, res) => {
+  if (password) {
+    fields.push('password = ?');
+    values.push(password); // plain text password
+  }
 
-    const {email, password } = req.body;
-    const newcustomer = {email, password }
-   await con.query('INSERT INTO customermaster SET ?', newcustomer, (error, result, fields) => {
-        if (error) console.log(error);
-        res.status(201).send({
-            msg: "new customer created successfully",
-            newcustomer
-        })
-    });
+  values.push(customerId); // for WHERE condition
+
+  const sql = `UPDATE customermaster SET ${fields.join(', ')} WHERE CUSTOMERID = ?`;
+
+  con.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Database update error:', err);
+      return res.status(500).json({ error: 'Database update failed', message: err.message });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    return res.status(200).json({ message: 'Account Information updated successfully' });
+  });
 };
+
+ exports.getcustomerbyid = (req, res) => {
+  const { customerId } = req.params;
+  if (!customerId) {
+    return res.status(400).json({ error: 'Customer ID is required' });
+  }
+
+  con.query(
+    'SELECT FNAME, LNAME, email, MOBILE, CADDRESSLINE1, CCITY, CSTATE, CCOUNTRY, CDISTRICT, CPINCODE FROM customermaster WHERE CUSTOMERID = ?',
+    [customerId],
+    (err, result) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ 
+          error: 'Database error',
+          message: err.message 
+        });
+      }
+
+      if (result.length === 0) {
+        return res.status(404).json({ message: 'Customer not found' });
+      }
+
+      res.json(result[0]);
+    }
+  );
+};
+  
+
+ exports.addcustomer = (req, res) => {
+    const { name, mobile, email, password } = req.body;
+  
+    if (!name || !mobile || !email || !password) {
+      return res.status(400).json({ 
+        success: false,
+        msg: "All fields are required"
+      });
+    }
+  
+    const checkEmailQuery = 'SELECT * FROM customermaster WHERE email = ?';
+  
+    con.query(checkEmailQuery, [email], (err, results) => {
+      if (err) {
+        console.error("❌ Email check error:", err);
+        return res.status(500).json({
+          success: false,
+          msg: "Internal server error",
+          error: err.message
+        });
+      }
+  
+      if (results.length > 0) {
+        return res.status(400).json({
+          success: false,
+          msg: "Email already exists"
+        });
+      }
+  
+      const newCustomer = { name, mobile, email, password };
+      const insertQuery = 'INSERT INTO customermaster SET ?';
+  
+      con.query(insertQuery, newCustomer, (insertErr, insertResults) => {
+        if (insertErr) {
+          console.error("❌ Insert error:", insertErr);
+          return res.status(500).json({
+            success: false,
+            msg: "Internal server error",
+            error: insertErr.message
+          });
+        }
+  
+        return res.status(201).json({
+          success: true,
+          msg: "New customer created successfully",
+          newCustomer
+        });
+      });
+    });
+  };
+  
+  
 exports.getAll = async (req, res) => {
    await con.query('SELECT * FROM customermaster', (err, result) => {
         if (err) {
@@ -45,58 +168,43 @@ exports.deletecustomer = async (req, res) => {
     });
 };
 
-exports.logincustomer = async (req, res) => {
+exports.logincustomer = (req, res) => {
     const { email, password } = req.body;
   
-    console.log('Received login request:', { email, password });
+    console.log("Received login request:", { email, password });
   
     if (!email || !password) {
       return res.status(400).json({ msg: "Email and password are required" });
     }
   
-    await con.query('SELECT * FROM customermaster WHERE email = ?', [email], (error, results, fields) => {
+    const query = "SELECT * FROM customermaster WHERE email = ?";
+    con.query(query, [email], (error, results) => {
       if (error) {
-        console.error('Database query error:', error);
-        return res.status(500).send("Internal Server Error");
+        console.error("Database query error:", error);
+        return res.status(500).json({ msg: "Internal server error" });
       }
   
       if (results.length === 0) {
-        console.log('customer not found:', email);
-        return res.status(401).json({ msg: "customer does not exist" });
+        return res.status(401).json({ msg: "Customer does not exist" });
       }
   
       const customer = results[0];
-  
+  console.log(customer);
       if (customer.password !== password) {
-        console.log('Password mismatch:', customer.password, password);
         return res.status(401).json({ msg: "Invalid password" });
       }
   
-      console.log('Login successful:', customer);
+      // ✅ Login success
       return res.status(200).json({
-        msg: "Welcome, customer",
-        customer
+        msg: "Login successful",
+        customer: {
+          id: customer.CUSTOMERID, 
+          name: customer.NAME,
+          email: customer.email,
+        },
       });
     });
   };
-  
-
-//     const { email, password } = req.body;
-
-//   await con.query('SELECT * FROM customermaster WHERE email = ? AND password = ?', [email, password], (error, results, fields) => {
-//         if (error) {
-//             console.error(error);
-//             return res.status(500).send("Internal Server Error");
-//         }
-//         if (results.length === 0) {
-//             return res.status(401).send("Invalid email or password");
-//         }
-//         const customer = results[0];
-//         res.status(200).send({
-//             msg: "Login successful",
-//             customer
-//         });
-//     });
 
 exports.editcustomer = async (req, res) => {
     try {
